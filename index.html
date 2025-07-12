@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Duke CBT Exam</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, h3 {
+      text-align: center;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin: auto;
+    }
+
+    iframe {
+      width: 100%;
+      height: 1000px;
+      border: none;
+      display: none;
+      margin-top: 20px;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Duke CBT System</h1>
+    <h2>Select Subject & Class to Begin</h2>
+
+    <div class="input-section">
+      <label for="studentName">Full Name:</label>
+      <input type="text" id="studentName" placeholder="Enter your full name" />
+
+      <label for="classSelect">Class:</label>
+      <select id="classSelect">
+        <option value="">-- Select Class --</option>
+        <option value="JSS1">JSS1</option>
+        <option value="JSS2">JSS2</option>
+        <option value="JSS3">JSS3</option>
+      </select>
+
+      <label for="subjectSelect">Subject:</label>
+      <select id="subjectSelect">
+        <option value="">-- Select Subject --</option>
+        <option value="agric">Agricultural Science</option>
+        <option value="homeecons">Home Economics</option>
+        <option value="computer">Computer Studies</option>
+      </select>
+
+      <button onclick="startQuiz()">Start Quiz</button>
+    </div>
+
+    <div class="form-section">
+      <h3>Good luck, <span id="displayName"></span>!</h3>
+      <iframe id="quizFrame" src=""></iframe>
+    </div>
+  </div>
+
+  <script>
+    const quizLinks = {
+      'JSS1_agric': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
+      'JSS1_homeecons': 'https://your-link-here.com',
+      'JSS1_computer': 'https://your-link-here.com',
+      'JSS2_agric': 'https://your-link-here.com',
+      'JSS2_homeecons': 'https://your-link-here.com',
+      'JSS2_computer': 'https://your-link-here.com',
+      'JSS3_agric': 'https://your-link-here.com',
+      'JSS3_homeecons': 'https://your-link-here.com',
+      'JSS3_computer': 'https://your-link-here.com',
+    };
+
+    function startQuiz() {
+      const name = document.getElementById("studentName").value.trim();
+      const selectedClass = document.getElementById("classSelect").value;
+      const selectedSubject = document.getElementById("subjectSelect").value;
+
+      if (!name || !selectedClass || !selectedSubject) {
+        alert("Please fill all fields before starting.");
+        return;
+      }
+
+      const key = `${selectedClass}_${selectedSubject}`;
+      const formLink = quizLinks[key];
+
+      if (!formLink) {
+        alert("Form not set up yet for this subject and class.");
+        return;
+      }
+
+      document.querySelector(".input-section").style.display = "none";
+      document.querySelector(".form-section").style.display = "block";
+      document.getElementById("displayName").innerText = name;
+      document.getElementById("quizFrame").src = formLink;
+      document.getElementById("quizFrame").style.display = "block";
+    }
+  </script>
+</body>
+</html>
