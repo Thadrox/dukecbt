@@ -57,12 +57,6 @@
       margin-top: 20px;
       display: none;
     }
-    .form-section, .timesup-section, #welcomeSection {
-      display: none;
-    }
-    #welcomeSection {
-      display: block;
-    }
     #timer {
       font-size: 20px;
       font-weight: bold;
@@ -81,16 +75,31 @@
       text-align: left;
       margin-top: 10px;
     }
+    /* Hide all main sections initially */
+    #welcomeLanding, #selectionSection, #quizSection, #timesUpSection {
+      display: none;
+    }
+    /* Show welcome landing first */
+    #welcomeLanding {
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <div class="container" id="welcomeSection">
+
+  <!-- Step 1: Welcome Landing Page -->
+  <div class="container" id="welcomeLanding">
     <img class="logo" src="https://raw.githubusercontent.com/Thadrox/dukecbt/refs/heads/main/logo.png" alt="Duke CBT Logo" />
     <h1>Welcome to Duke CBT System</h1>
-    <h2>Select Term, Subject & Class to Begin</h2>
+    <label for="landingNameInput">Please enter your full name to start</label>
+    <input type="text" id="landingNameInput" placeholder="Enter your full name" />
+    <button id="landingStartBtn">Click to Start Attempt</button>
+  </div>
 
-    <label for="studentName">Full Name:</label>
-    <input type="text" id="studentName" placeholder="Enter your full name" />
+  <!-- Step 2: Selection Page (class, subject, term) -->
+  <div class="container" id="selectionSection">
+    <h2>Hello, <span id="studentNameDisplay"></span>!</h2>
+    <h3>Select Term, Subject & Class to Begin</h3>
 
     <label for="classSelect">Class:</label>
     <select id="classSelect">
@@ -116,16 +125,18 @@
       <option value="third">Third Term</option>
     </select>
 
-    <button id="startBtn">Start Quiz</button>
+    <button id="startQuizBtn">Start Quiz</button>
   </div>
 
-  <div class="container form-section" id="quizSection">
+  <!-- Step 3: Quiz Section -->
+  <div class="container" id="quizSection">
     <div id="timer">Time Remaining: --:--</div>
     <h3>Good luck, <span id="displayName"></span>!</h3>
     <iframe id="quizFrame" src=""></iframe>
   </div>
 
-  <div class="container timesup-section" id="timesUpSection">
+  <!-- Time's Up Section -->
+  <div class="container" id="timesUpSection">
     <h2>⏰ Time's Up!</h2>
     <p>Please submit your answers if you haven't already.</p>
     <button onclick="restartQuiz()">Restart Quiz for Next Student</button>
@@ -155,23 +166,38 @@
   };
 
   let countdownInterval;
+  let currentStudentName = "";
 
-  const startBtn = document.getElementById("startBtn");
-  startBtn.addEventListener("click", () => {
-    const name = document.getElementById("studentName").value.trim();
+  // Step 1: Handle Welcome Landing "Click to Start Attempt"
+  document.getElementById("landingStartBtn").addEventListener("click", () => {
+    const nameInput = document.getElementById("landingNameInput").value.trim();
+    if (!nameInput) {
+      alert("Please enter your full name to proceed.");
+      return;
+    }
+
+    const allowedLower = allowedNames.map(n => n.toLowerCase());
+    if (!allowedLower.includes(nameInput.toLowerCase())) {
+      alert("Access Denied! Your name is not on the approved student list.");
+      return;
+    }
+
+    currentStudentName = nameInput;
+    document.getElementById("studentNameDisplay").textContent = currentStudentName;
+
+    // Move to selection page
+    document.getElementById("welcomeLanding").style.display = "none";
+    document.getElementById("selectionSection").style.display = "block";
+  });
+
+  // Step 2: Handle Start Quiz button on selection page
+  document.getElementById("startQuizBtn").addEventListener("click", () => {
     const cls = document.getElementById("classSelect").value.toLowerCase();
     const subject = document.getElementById("subjectSelect").value.toLowerCase();
     const term = document.getElementById("termSelect").value.toLowerCase();
 
-    if (!name || !cls || !subject || !term) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    // Name check (case-insensitive)
-    const allowedLower = allowedNames.map(n => n.toLowerCase());
-    if (!allowedLower.includes(name.toLowerCase())) {
-      alert("Access Denied! Your name is not on the approved student list.");
+    if (!cls || !subject || !term) {
+      alert("Please select class, subject, and term.");
       return;
     }
 
@@ -184,10 +210,10 @@
       return;
     }
 
-    // Show quiz section, hide welcome
-    document.getElementById("welcomeSection").style.display = "none";
+    // Show quiz section, hide selection
+    document.getElementById("selectionSection").style.display = "none";
     document.getElementById("quizSection").style.display = "block";
-    document.getElementById("displayName").textContent = name;
+    document.getElementById("displayName").textContent = currentStudentName;
 
     const iframe = document.getElementById("quizFrame");
     iframe.src = formLink;
@@ -234,5 +260,6 @@
     location.reload();
   }
 </script>
+
 </body>
 </html>
