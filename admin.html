@@ -1,149 +1,316 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Duke CBT Admin Panel</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 800px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    h1, h2 {
-      text-align: center;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin: 15px 0 5px;
-    }
-    textarea, input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .section {
-      margin-bottom: 30px;
-    }
-    .hidden {
-      display: none;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Duke CBT Admin Panel</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    margin: 0; padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #007bff;
+  }
+  section {
+    background: #fff;
+    margin: 15px auto;
+    max-width: 900px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  }
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  input[type=text], select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  button {
+    margin-top: 12px;
+    padding: 10px 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  table {
+    width: 100%;
+    margin-top: 15px;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background: #007bff;
+    color: white;
+  }
+  .small-btn {
+    padding: 5px 10px;
+    background: #dc3545;
+    border-radius: 4px;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Duke CBT Admin Panel</h1><div id="loginSection">
-  <label for="adminPass">Enter Admin Password:</label>
-  <input type="password" id="adminPass" />
-  <button onclick="checkLogin()">Login</button>
-</div>
 
-<div id="adminPanel" class="hidden">
-  <div class="section">
-    <h2>1. Allowed Student Names</h2>
-    <label for="nameList">Comma-separated names:</label>
-    <textarea id="nameList" rows="4"></textarea>
-    <button onclick="saveNames()">Save Names</button>
-  </div>
+<h1>Duke CBT Admin Panel</h1>
 
-  <div class="section">
-    <h2>2. Google Form Links</h2>
-    <label for="quizLinks">Enter quiz keys and links (format: key|url):</label>
-    <textarea id="quizLinks" rows="6"></textarea>
-    <button onclick="saveLinks()">Save Links</button>
-  </div>
+<section>
+  <h2>Manage Allowed Student Names</h2>
+  <input type="text" id="newNameInput" placeholder="Enter student full name" />
+  <button onclick="addName()">Add Name</button>
 
-  <div class="section">
-    <h2>3. Time Settings</h2>
-    <label for="timeSettings">Enter durations in minutes (format: key|minutes):</label>
-    <textarea id="timeSettings" rows="4"></textarea>
-    <button onclick="saveTimes()">Save Time Settings</button>
-  </div>
+  <table id="namesTable">
+    <thead>
+      <tr><th>Student Name</th><th>Action</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
 
-  <div class="section">
-    <h2>4. Access Logs</h2>
-    <button onclick="viewLogs()">View Logs</button>
-    <pre id="logOutput"></pre>
-  </div>
-</div>
+<section>
+  <h2>Manage Quiz Links and Timers</h2>
+  <label for="classSelect">Class:</label>
+  <select id="classSelect">
+    <option value="">-- Select Class --</option>
+    <option value="JSS1">JSS1</option>
+    <option value="JSS2">JSS2</option>
+    <option value="JSS3">JSS3</option>
+  </select>
 
-  </div>  <script>
-    const ADMIN_PASSWORD = "dukeadmin123"; // Change this to your desired password
+  <label for="subjectSelect">Subject:</label>
+  <select id="subjectSelect">
+    <option value="">-- Select Subject --</option>
+    <option value="agric">Agricultural Science</option>
+    <option value="homeecons">Home Economics</option>
+    <option value="computer">Computer Studies</option>
+  </select>
 
-    function checkLogin() {
-      const pass = document.getElementById("adminPass").value;
-      if (pass === ADMIN_PASSWORD) {
-        document.getElementById("loginSection").classList.add("hidden");
-        document.getElementById("adminPanel").classList.remove("hidden");
-        loadStoredData();
-      } else {
-        alert("Incorrect password.");
-      }
+  <label for="termSelect">Term:</label>
+  <select id="termSelect">
+    <option value="">-- Select Term --</option>
+    <option value="first">First Term</option>
+    <option value="second">Second Term</option>
+    <option value="third">Third Term</option>
+  </select>
+
+  <label for="embedLinkInput">Google Form Embed Link (iframe src URL):</label>
+  <input type="text" id="embedLinkInput" placeholder="Paste embed link here" />
+
+  <label for="timeLimitInput">Time Limit (minutes):</label>
+  <input type="number" id="timeLimitInput" min="1" max="180" placeholder="e.g. 30" />
+
+  <button onclick="addOrUpdateQuiz()">Add / Update Quiz Link</button>
+
+  <table id="quizTable">
+    <thead>
+      <tr>
+        <th>Class</th><th>Subject</th><th>Term</th><th>Link</th><th>Time (min)</th><th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Access Logs</h2>
+  <button onclick="clearLogs()">Clear Logs</button>
+  <pre id="logsArea" style="background:#eee; padding:10px; height:150px; overflow-y:auto;"></pre>
+</section>
+
+<section>
+  <h2>Export Data</h2>
+  <button onclick="exportNamesCSV()">Export Allowed Names CSV</button>
+  <button onclick="exportQuizCSV()">Export Quiz Links & Times CSV</button>
+</section>
+
+<script>
+  // STORAGE KEYS
+  const NAMES_KEY = "dukecbt_allowed_names";
+  const QUIZ_KEY = "dukecbt_quiz_links";
+  const LOGS_KEY = "dukecbt_access_logs";
+
+  // Load from localStorage or initialize empty
+  let allowedNames = JSON.parse(localStorage.getItem(NAMES_KEY)) || [];
+  let quizLinks = JSON.parse(localStorage.getItem(QUIZ_KEY)) || {};
+  let accessLogs = JSON.parse(localStorage.getItem(LOGS_KEY)) || [];
+
+  // Helper to save all
+  function saveAll() {
+    localStorage.setItem(NAMES_KEY, JSON.stringify(allowedNames));
+    localStorage.setItem(QUIZ_KEY, JSON.stringify(quizLinks));
+    localStorage.setItem(LOGS_KEY, JSON.stringify(accessLogs));
+  }
+
+  // === Manage Names ===
+  function refreshNamesTable() {
+    const tbody = document.querySelector("#namesTable tbody");
+    tbody.innerHTML = "";
+    allowedNames.forEach((name, i) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${name}</td>
+        <td><button class="small-btn" onclick="removeName(${i})">Remove</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function addName() {
+    const input = document.getElementById("newNameInput");
+    const newName = input.value.trim();
+    if (!newName) return alert("Please enter a student name.");
+    if (allowedNames.some(n => n.toLowerCase() === newName.toLowerCase())) {
+      alert("Name already exists.");
+      return;
+    }
+    allowedNames.push(newName);
+    saveAll();
+    refreshNamesTable();
+    input.value = "";
+  }
+
+  function removeName(index) {
+    if (!confirm("Remove this name?")) return;
+    allowedNames.splice(index, 1);
+    saveAll();
+    refreshNamesTable();
+  }
+
+  // === Manage Quiz Links ===
+
+  function refreshQuizTable() {
+    const tbody = document.querySelector("#quizTable tbody");
+    tbody.innerHTML = "";
+    for (const key in quizLinks) {
+      const [cls, subject, term] = key.split("_");
+      const { link, time } = quizLinks[key];
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${cls}</td>
+        <td>${subject}</td>
+        <td>${term}</td>
+        <td><a href="${link}" target="_blank" rel="noopener noreferrer">Open Link</a></td>
+        <td>${time}</td>
+        <td><button class="small-btn" onclick="removeQuiz('${key}')">Remove</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  function addOrUpdateQuiz() {
+    const cls = document.getElementById("classSelect").value;
+    const subject = document.getElementById("subjectSelect").value;
+    const term = document.getElementById("termSelect").value;
+    const link = document.getElementById("embedLinkInput").value.trim();
+    const time = parseInt(document.getElementById("timeLimitInput").value);
+
+    if (!cls || !subject || !term || !link || !time) {
+      alert("Please fill all quiz fields.");
+      return;
+    }
+    if (time < 1 || time > 180) {
+      alert("Time limit must be between 1 and 180 minutes.");
+      return;
     }
 
-    function saveNames() {
-      const names = document.getElementById("nameList").value;
-      localStorage.setItem("allowedNames", names);
-      alert("Names updated.");
-    }
+    const key = `${cls}_${subject}_${term}`;
+    quizLinks[key] = { link, time };
+    saveAll();
+    refreshQuizTable();
+    alert("Quiz link saved.");
+  }
 
-    function saveLinks() {
-      const raw = document.getElementById("quizLinks").value;
-      const entries = raw.split('\n');
-      const data = {};
-      entries.forEach(line => {
-        const [key, url] = line.split('|');
-        if (key && url) data[key.trim()] = url.trim();
-      });
-      localStorage.setItem("quizLinks", JSON.stringify(data));
-      alert("Quiz links saved.");
-    }
+  function removeQuiz(key) {
+    if (!confirm("Remove this quiz link?")) return;
+    delete quizLinks[key];
+    saveAll();
+    refreshQuizTable();
+  }
 
-    function saveTimes() {
-      const raw = document.getElementById("timeSettings").value;
-      const entries = raw.split('\n');
-      const data = {};
-      entries.forEach(line => {
-        const [key, mins] = line.split('|');
-        if (key && mins) data[key.trim()] = parseInt(mins.trim());
-      });
-      localStorage.setItem("quizDurations", JSON.stringify(data));
-      alert("Time durations saved.");
-    }
+  // === Access Logs ===
 
-    function viewLogs() {
-      const logs = localStorage.getItem("accessLogs") || "No logs yet.";
-      document.getElementById("logOutput").textContent = logs;
+  function refreshLogs() {
+    const logsArea = document.getElementById("logsArea");
+    if (accessLogs.length === 0) {
+      logsArea.textContent = "No access logs recorded yet.";
+    } else {
+      logsArea.textContent = accessLogs.map(l => `${l.timestamp}: ${l.message}`).join("\n");
     }
+  }
 
-    function loadStoredData() {
-      document.getElementById("nameList").value = localStorage.getItem("allowedNames") || "";
-      const quizLinks = JSON.parse(localStorage.getItem("quizLinks") || '{}');
-      const linkLines = Object.entries(quizLinks).map(([k, v]) => `${k}|${v}`).join('\n');
-      document.getElementById("quizLinks").value = linkLines;
+  function clearLogs() {
+    if (!confirm("Clear all logs?")) return;
+    accessLogs = [];
+    saveAll();
+    refreshLogs();
+  }
 
-      const quizTimes = JSON.parse(localStorage.getItem("quizDurations") || '{}');
-      const timeLines = Object.entries(quizTimes).map(([k, v]) => `${k}|${v}`).join('\n');
-      document.getElementById("timeSettings").value = timeLines;
+  // === Export CSV ===
+
+  function exportNamesCSV() {
+    if (allowedNames.length === 0) {
+      alert("No allowed names to export.");
+      return;
     }
-  </script></body>
+    let csv = "Student Name\n";
+    csv += allowedNames.map(name => `"${name.replace(/"/g, '""')}"`).join("\n");
+    downloadCSV(csv, "allowed_names.csv");
+  }
+
+  function exportQuizCSV() {
+    const keys = Object.keys(quizLinks);
+    if (keys.length === 0) {
+      alert("No quiz links to export.");
+      return;
+    }
+    let csv = "Class,Subject,Term,Link,Time (minutes)\n";
+    keys.forEach(key => {
+      const [cls, subject, term] = key.split("_");
+      const { link, time } = quizLinks[key];
+      csv += `"${cls}","${subject}","${term}","${link.replace(/"/g, '""')}","${time}"\n`;
+    });
+    downloadCSV(csv, "quiz_links.csv");
+  }
+
+  function downloadCSV(csvContent, fileName) {
+    const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  // Initialize UI
+  refreshNamesTable();
+  refreshQuizTable();
+  refreshLogs();
+</script>
+
+</body>
 </html>
