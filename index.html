@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Duke CBT System</title>
-  <meta name="theme-color" content="#007bff" />
-  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#007bff"/>
+  <link rel="manifest" href="manifest.json"/>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -76,7 +76,7 @@
     <h2>Select Class, Subject, and Term</h2>
 
     <div class="input-section">
-      <img src="https://raw.githubusercontent.com/Thadrox/dukecbt/main/logo.png" alt="Duke CBT Logo" class="logo" />
+      <img src="logo.png" alt="Duke CBT Logo" class="logo"/>
 
       <label for="studentName">Full Name:</label>
       <input type="text" id="studentName" placeholder="Enter your full name" />
@@ -110,33 +110,12 @@
 
     <div class="form-section">
       <h3>Good luck, <span id="displayName"></span>!</h3>
-      <div id="timer">Time Left: 30:00</div>
+      <div id="timer">Time Left: 00:00</div>
       <iframe id="quizFrame" src=""></iframe>
     </div>
   </div>
 
   <script>
-    // Allowed student names
-    const allowedNames = [
-      "Precious-Duke Darawuzie",
-      "Chidera Okoye",
-      "Ifeoma Nwachukwu"
-    ];
-
-    // Google Form links for quizzes
-    const quizLinks = {
-      'JSS1_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-      // Add more quiz links here for other combos
-    };
-
-    // Timer limits in seconds for each quiz combo (class_subject_term)
-    const timeLimits = {
-      'JSS1_agric_third': 30 * 60,       // 30 minutes
-      'JSS1_homeecons_third': 25 * 60,   // 25 minutes
-      'JSS1_computer_third': 40 * 60,    // 40 minutes
-      // Add more time limits here as needed
-    };
-
     let timerInterval;
 
     function startQuiz() {
@@ -144,47 +123,57 @@
       const cls = document.getElementById("classSelect").value;
       const subject = document.getElementById("subjectSelect").value;
       const term = document.getElementById("termSelect").value;
+      const key = `${cls}_${subject}_${term}`;
 
       if (!name || !cls || !subject || !term) {
         alert("Please fill all fields before starting.");
         return;
       }
 
+      // Get allowed names from localStorage
+      const allowedNames = JSON.parse(localStorage.getItem('allowedNames') || '[]');
       if (!allowedNames.some(n => n.toLowerCase() === name.toLowerCase())) {
-        alert("Access Denied: Your name is not authorized for this test.");
+        alert("Access Denied: Your name is not authorized.");
         return;
       }
 
-      const key = `${cls}_${subject}_${term}`;
+      // Get quiz links from localStorage
+      const quizLinks = JSON.parse(localStorage.getItem('quizLinks') || '{}');
       const formLink = quizLinks[key];
-
       if (!formLink) {
-        alert("Quiz not yet available for this selection.");
+        alert("Quiz not available for this selection.");
         return;
       }
 
-      // Show quiz iframe and hide input form
+      // Get time limits from localStorage
+      const quizTimes = JSON.parse(localStorage.getItem('quizTimes') || '{}');
+      const minutes = quizTimes[key] || 30; // default 30 mins
+
       document.querySelector(".input-section").style.display = "none";
       document.querySelector(".form-section").style.display = "block";
-
       document.getElementById("displayName").innerText = name;
-      document.getElementById("quizFrame").src = formLink;
-      document.getElementById("quizFrame").style.display = "block";
+      const iframe = document.getElementById("quizFrame");
+      iframe.src = formLink;
+      iframe.style.display = "block";
 
-      // Get timer limit for this quiz or default to 30 minutes (in seconds)
-      let timer = timeLimits[key] || 30 * 60;
+      let timer = minutes * 60;
       const timerDisplay = document.getElementById("timer");
 
       function updateTimer() {
-        const minutes = Math.floor(timer / 60);
-        const seconds = timer % 60;
-        timerDisplay.textContent = `Time Left: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+        const mins = Math.floor(timer / 60);
+        const secs = timer % 60;
+        timerDisplay.textContent = `Time Left: ${mins}:${secs.toString().padStart(2, "0")}`;
+
+        if (timer === 15) {
+          alert("⏰ Time is almost up! Submitting in 15 seconds.");
+        }
 
         if (--timer < 0) {
           clearInterval(timerInterval);
-          alert("Time's up! Please submit your quiz.");
-          // Disable interaction with iframe
-          document.getElementById('quizFrame').style.pointerEvents = 'none';
+          alert("Time's up! Submitting now.");
+          iframe.style.pointerEvents = "none";
+          // Reload after grace
+          setTimeout(() => location.reload(), 2000);
         }
       }
 
@@ -192,12 +181,12 @@
       timerInterval = setInterval(updateTimer, 1000);
     }
 
-    // Register service worker for PWA
+    // PWA service worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js')
-          .then(reg => console.log('Service Worker registered.', reg))
-          .catch(err => console.error('Service Worker failed:', err));
+          .then(reg => console.log("Service worker registered:", reg))
+          .catch(err => console.error("Service worker error:", err));
       });
     }
   </script>
