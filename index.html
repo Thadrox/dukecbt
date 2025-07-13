@@ -63,23 +63,28 @@
       margin-bottom: 15px;
       color: green;
     }
-    #timer.warning { color: orange; }
-    #timer.timeup { color: red; }
-
+    #timer.warning {
+      color: orange;
+    }
+    #timer.timeup {
+      color: red;
+    }
     label {
       font-weight: bold;
       display: block;
       text-align: left;
       margin-top: 10px;
     }
-
-    /* Pages hidden by default */
     #landingPage, #namePage, #selectionPage, #quizPage, #timesUpPage {
       display: none;
     }
-
     #landingPage {
       display: block;
+    }
+    #messageArea {
+      font-weight: bold;
+      color: red;
+      margin: 10px 0;
     }
   </style>
 </head>
@@ -135,9 +140,9 @@
 <div class="container" id="quizPage">
   <div id="timer">Time Remaining: --:--</div>
   <h3>Good luck, <span id="displayName"></span>!</h3>
-  <div id="messageArea" style="margin-bottom: 10px; color: red;"></div>
+  <p id="messageArea"></p>
   <iframe id="quizFrame" src=""></iframe>
-  <button id="goBackBtn" style="display: none;">⬅ Back to Selection</button>
+  <button id="goBackBtn" style="display: none;">⏪ Go Back</button>
 </div>
 
 <!-- Time's Up Page -->
@@ -148,144 +153,132 @@
 </div>
 
 <script>
-  const allowedNames = [
-    "Precious Duke", "Chinedu Okafor", "Adaobi Nwosu", "Ngozi Chukwu", "Samuel Eze"
-  ];
+const allowedNames = [
+  "Precious Duke",
+  "Chinedu Okafor",
+  "Adaobi Nwosu",
+  "Ngozi Chukwu",
+  "Samuel Eze"
+];
 
-  const quizLinks = {
-    'jss1_agric_first': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-    'jss1_homeecons_first': 'https://your-link-here.com',
-    'jss1_computer_first': 'https://your-link-here.com',
-    'jss1_agric_second': 'https://your-link-here.com',
-    'jss1_homeecons_second': 'https://your-link-here.com',
-    'jss1_computer_second': 'https://your-link-here.com',
-    'jss1_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-    'jss1_homeecons_third': 'https://your-link-here.com',
-    'jss1_computer_third': 'https://your-link-here.com',
-    'jss2_agric_first': 'https://your-link-here.com',
-    'jss2_homeecons_first': 'https://your-link-here.com',
-    'jss2_computer_first': 'https://your-link-here.com',
-    'jss2_agric_second': 'https://your-link-here.com',
-    'jss2_homeecons_second': 'https://your-link-here.com',
-    'jss2_computer_second': 'https://your-link-here.com',
-    'jss2_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-    'jss2_homeecons_third': 'https://your-link-here.com',
-    'jss2_computer_third': 'https://your-link-here.com',
-  };
+const quizLinks = {
+  'jss1_agric_first': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
+  'jss1_homeecons_first': 'https://your-link-here.com',
+  'jss1_computer_first': 'https://your-link-here.com',
+  'jss1_agric_second': 'https://your-link-here.com',
+  'jss1_homeecons_second': 'https://your-link-here.com',
+  'jss1_computer_second': 'https://your-link-here.com',
+  'jss1_agric_third': 'https://your-link-here.com',
+  'jss1_homeecons_third': 'https://your-link-here.com',
+  'jss1_computer_third': 'https://your-link-here.com',
+  'jss2_agric_first': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
+  'jss2_homeecons_first': 'https://your-link-here.com',
+  'jss2_computer_first': 'https://your-link-here.com',
+  'jss2_agric_second': 'https://your-link-here.com',
+  'jss2_homeecons_second': 'https://your-link-here.com',
+  'jss2_computer_second': 'https://your-link-here.com',
+  'jss2_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
+  'jss2_homeecons_third': 'https://your-link-here.com',
+  'jss2_computer_third': 'https://your-link-here.com',
+};
 
-  const quizTimes = {
-    'jss1_agric_first': 45,
-    'jss1_homeecons_first': 40,
-    'jss1_computer_first': 35,
-    'jss1_agric_third': 45,
-    'jss2_agric_third': 45,
-    // Add more as needed
-  };
+const quizTimes = {
+  'jss1_agric_first': 45,
+  'jss1_homeecons_first': 40,
+  'jss1_computer_first': 35,
+};
 
-  let countdownInterval;
-  let currentStudentName = "";
+let countdownInterval;
+let currentStudentName = "";
 
-  // Step 1 → 2
-  document.getElementById("landingStartBtn").addEventListener("click", () => {
-    document.getElementById("landingPage").style.display = "none";
-    document.getElementById("namePage").style.display = "block";
-  });
+document.getElementById("landingStartBtn").addEventListener("click", () => {
+  document.getElementById("landingPage").style.display = "none";
+  document.getElementById("namePage").style.display = "block";
+});
 
-  // Step 2 → 3
-  document.getElementById("nameNextBtn").addEventListener("click", () => {
-    const nameInput = document.getElementById("studentNameInput").value.trim();
-    if (!nameInput) {
-      alert("Please enter your full name to proceed.");
-      return;
-    }
-    const allowedLower = allowedNames.map(n => n.toLowerCase());
-    if (!allowedLower.includes(nameInput.toLowerCase())) {
-      alert("Access Denied! Your name is not on the approved student list.");
-      return;
-    }
-    currentStudentName = nameInput;
-    document.getElementById("displayStudentName").textContent = currentStudentName;
-    document.getElementById("namePage").style.display = "none";
-    document.getElementById("selectionPage").style.display = "block";
-  });
+document.getElementById("nameNextBtn").addEventListener("click", () => {
+  const nameInput = document.getElementById("studentNameInput").value.trim();
+  if (!nameInput) return alert("Please enter your full name to proceed.");
+  const allowedLower = allowedNames.map(n => n.toLowerCase());
+  if (!allowedLower.includes(nameInput.toLowerCase())) {
+    alert("Access Denied! Your name is not on the approved student list.");
+    return;
+  }
+  currentStudentName = nameInput;
+  document.getElementById("displayStudentName").textContent = currentStudentName;
+  document.getElementById("namePage").style.display = "none";
+  document.getElementById("selectionPage").style.display = "block";
+});
 
-  // Step 3 → 4
-  document.getElementById("startQuizBtn").addEventListener("click", () => {
-    const cls = document.getElementById("classSelect").value.toLowerCase();
-    const subject = document.getElementById("subjectSelect").value.toLowerCase();
-    const term = document.getElementById("termSelect").value.toLowerCase();
+document.getElementById("startQuizBtn").addEventListener("click", () => {
+  const cls = document.getElementById("classSelect").value.toLowerCase();
+  const subject = document.getElementById("subjectSelect").value.toLowerCase();
+  const term = document.getElementById("termSelect").value.toLowerCase();
+  if (!cls || !subject || !term) return alert("Please select class, subject, and term.");
 
-    if (!cls || !subject || !term) {
-      alert("Please select class, subject, and term.");
-      return;
-    }
+  const key = `${cls}_${subject}_${term}`;
+  const formLink = quizLinks[key];
+  const quizTime = quizTimes[key];
 
-    const key = `${cls}_${subject}_${term}`;
-    const formLink = quizLinks[key];
-    const quizTime = quizTimes[key];
+  document.getElementById("selectionPage").style.display = "none";
+  document.getElementById("quizPage").style.display = "block";
+  document.getElementById("displayName").textContent = currentStudentName;
 
-    document.getElementById("selectionPage").style.display = "none";
-    document.getElementById("quizPage").style.display = "block";
-
-    if (!formLink || formLink.includes("your-link-here") || !quizTime) {
-      document.getElementById("messageArea").innerText = "❌ Sorry, this test is not yet uploaded. Please check back later.";
-      document.getElementById("quizFrame").style.display = "none";
-      document.getElementById("timer").style.display = "none";
-      document.getElementById("goBackBtn").style.display = "block";
-      return;
-    }
-
-    document.getElementById("displayName").textContent = currentStudentName;
-    const iframe = document.getElementById("quizFrame");
-    iframe.src = formLink;
-    iframe.style.display = "block";
-    document.getElementById("messageArea").innerText = "";
-    document.getElementById("timer").style.display = "block";
-    document.getElementById("goBackBtn").style.display = "none";
-
-    startTimer(quizTime);
-  });
-
-  // Back to selection
-  document.getElementById("goBackBtn").addEventListener("click", () => {
-    document.getElementById("quizPage").style.display = "none";
-    document.getElementById("selectionPage").style.display = "block";
-    document.getElementById("messageArea").innerText = "";
-    document.getElementById("goBackBtn").style.display = "none";
-  });
-
-  function startTimer(minutes) {
-    let timeLeft = minutes * 60;
-    const timerEl = document.getElementById("timer");
-    timerEl.classList.remove("warning", "timeup");
-
-    countdownInterval = setInterval(() => {
-      const mins = Math.floor(timeLeft / 60);
-      const secs = timeLeft % 60;
-      timerEl.textContent = `Time Remaining: ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-
-      if (timeLeft <= 15 && timeLeft > 0) timerEl.classList.add("warning");
-
-      if (timeLeft <= 0) {
-        clearInterval(countdownInterval);
-        timerEl.textContent = "Time's Up!";
-        timerEl.classList.remove("warning");
-        timerEl.classList.add("timeup");
-        endQuiz();
-      }
-
-      timeLeft--;
-    }, 1000);
+  if (!formLink || !quizTime || formLink.includes("your-link-here")) {
+    document.getElementById("quizFrame").style.display = "none";
+    document.getElementById("timer").style.display = "none";
+    document.getElementById("goBackBtn").style.display = "block";
+    document.getElementById("messageArea").innerText = "❌ Sorry, this test has not been uploaded yet. Please check back later.";
+    return;
   }
 
-  function endQuiz() {
-    document.getElementById("quizPage").style.display = "none";
-    document.getElementById("timesUpPage").style.display = "block";
-  }
+  document.getElementById("quizFrame").src = formLink;
+  document.getElementById("quizFrame").style.display = "block";
+  document.getElementById("messageArea").innerText = "";
+  document.getElementById("timer").style.display = "block";
+  document.getElementById("goBackBtn").style.display = "none";
 
-  function restartQuiz() {
-    location.reload();
-  }
+  startTimer(quizTime);
+});
+
+document.getElementById("goBackBtn").addEventListener("click", () => {
+  document.getElementById("quizPage").style.display = "none";
+  document.getElementById("selectionPage").style.display = "block";
+  document.getElementById("messageArea").innerText = "";
+});
+
+function startTimer(minutes) {
+  let timeLeft = minutes * 60;
+  const timerEl = document.getElementById("timer");
+  timerEl.classList.remove("warning", "timeup");
+
+  countdownInterval = setInterval(() => {
+    const mins = Math.floor(timeLeft / 60);
+    const secs = timeLeft % 60;
+    timerEl.textContent = `Time Remaining: ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+
+    if (timeLeft <= 15 && timeLeft > 0) timerEl.classList.add("warning");
+
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
+      timerEl.textContent = "Time's Up!";
+      timerEl.classList.remove("warning");
+      timerEl.classList.add("timeup");
+      endQuiz();
+    }
+
+    timeLeft--;
+  }, 1000);
+}
+
+function endQuiz() {
+  document.getElementById("quizPage").style.display = "none";
+  document.getElementById("timesUpPage").style.display = "block";
+}
+
+function restartQuiz() {
+  location.reload();
+}
 </script>
 
 </body>
