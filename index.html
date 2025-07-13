@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Duke CBT Exam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duke CBT System</title>
+  <meta name="theme-color" content="#007bff" />
+  <link rel="manifest" href="manifest.json" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -59,14 +62,31 @@
     label {
       font-weight: bold;
     }
+
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 150px;
+      height: auto;
+    }
+
+    #timer {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #007bff;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Duke CBT System</h1>
-    <h2>Select Subject & Class to Begin</h2>
+    <h2>Select Class, Subject, and Term</h2>
 
     <div class="input-section">
+      <img src="https://raw.githubusercontent.com/Thadrox/dukecbt/main/logo.png" alt="Duke CBT Logo" class="logo" />
+
       <label for="studentName">Full Name:</label>
       <input type="text" id="studentName" placeholder="Enter your full name" />
 
@@ -86,43 +106,60 @@
         <option value="computer">Computer Studies</option>
       </select>
 
+      <label for="termSelect">Term:</label>
+      <select id="termSelect">
+        <option value="">-- Select Term --</option>
+        <option value="first">First Term</option>
+        <option value="second">Second Term</option>
+        <option value="third">Third Term</option>
+      </select>
+
       <button onclick="startQuiz()">Start Quiz</button>
     </div>
 
     <div class="form-section">
       <h3>Good luck, <span id="displayName"></span>!</h3>
+      <div id="timer">Time Left: 30:00</div>
       <iframe id="quizFrame" src=""></iframe>
     </div>
   </div>
 
   <script>
+    // Allowed student names
+    const allowedNames = [
+      "Precious-Duke Darawuzie",
+      "Chidera Okoye",
+      "Ifeoma Nwachukwu"
+    ];
+
     const quizLinks = {
-      'JSS1_agric': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-      'JSS1_homeecons': 'https://your-link-here.com',
-      'JSS1_computer': 'https://your-link-here.com',
-      'JSS2_agric': 'https://your-link-here.com',
-      'JSS2_homeecons': 'https://your-link-here.com',
-      'JSS2_computer': 'https://your-link-here.com',
-      'JSS3_agric': 'https://your-link-here.com',
-      'JSS3_homeecons': 'https://your-link-here.com',
-      'JSS3_computer': 'https://your-link-here.com',
+      'JSS1_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
+      // Add more links as needed
     };
+
+    let timerInterval;
 
     function startQuiz() {
       const name = document.getElementById("studentName").value.trim();
-      const selectedClass = document.getElementById("classSelect").value;
-      const selectedSubject = document.getElementById("subjectSelect").value;
+      const cls = document.getElementById("classSelect").value;
+      const subject = document.getElementById("subjectSelect").value;
+      const term = document.getElementById("termSelect").value;
 
-      if (!name || !selectedClass || !selectedSubject) {
+      if (!name || !cls || !subject || !term) {
         alert("Please fill all fields before starting.");
         return;
       }
 
-      const key = `${selectedClass}_${selectedSubject}`;
+      if (!allowedNames.some(n => n.toLowerCase() === name.toLowerCase())) {
+        alert("Access Denied: Your name is not authorized for this test.");
+        return;
+      }
+
+      const key = `${cls}_${subject}_${term}`;
       const formLink = quizLinks[key];
 
       if (!formLink) {
-        alert("Form not set up yet for this subject and class.");
+        alert("Quiz not yet available for this selection.");
         return;
       }
 
@@ -131,6 +168,34 @@
       document.getElementById("displayName").innerText = name;
       document.getElementById("quizFrame").src = formLink;
       document.getElementById("quizFrame").style.display = "block";
+
+      // Start 30-minute countdown
+      let timer = 30 * 60; // 30 minutes
+      const timerDisplay = document.getElementById("timer");
+
+      function updateTimer() {
+        const minutes = Math.floor(timer / 60);
+        const seconds = timer % 60;
+        timerDisplay.textContent = `Time Left: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+
+        if (--timer < 0) {
+          clearInterval(timerInterval);
+          alert("Time's up! Please submit your quiz.");
+          document.getElementById('quizFrame').style.pointerEvents = 'none';
+        }
+      }
+
+      updateTimer();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    // Register service worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('Service Worker registered.', reg))
+          .catch(err => console.error('Service Worker failed:', err));
+      });
     }
   </script>
 </body>
