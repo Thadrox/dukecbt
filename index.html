@@ -13,7 +13,6 @@
       margin: 0;
       padding: 0;
     }
-
     .container {
       max-width: 800px;
       margin: 30px auto;
@@ -22,11 +21,9 @@
       border-radius: 10px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
-
     h1, h2, h3 {
       text-align: center;
     }
-
     input[type="text"], select {
       width: 100%;
       padding: 12px;
@@ -34,7 +31,6 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-
     button {
       padding: 12px 20px;
       background-color: #007bff;
@@ -46,7 +42,6 @@
       display: block;
       margin: auto;
     }
-
     iframe {
       width: 100%;
       height: 1000px;
@@ -54,22 +49,18 @@
       display: none;
       margin-top: 20px;
     }
-
     .form-section {
       display: none;
     }
-
     label {
       font-weight: bold;
     }
-
     .logo {
       display: block;
       margin: 0 auto 20px;
       max-width: 150px;
       height: auto;
     }
-
     #timer {
       text-align: center;
       font-size: 18px;
@@ -132,9 +123,18 @@
       "Ifeoma Nwachukwu"
     ];
 
+    // Google Form links for quizzes
     const quizLinks = {
       'JSS1_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-      // Add more links as needed
+      // Add more quiz links here for other combos
+    };
+
+    // Timer limits in seconds for each quiz combo (class_subject_term)
+    const timeLimits = {
+      'JSS1_agric_third': 30 * 60,       // 30 minutes
+      'JSS1_homeecons_third': 25 * 60,   // 25 minutes
+      'JSS1_computer_third': 40 * 60,    // 40 minutes
+      // Add more time limits here as needed
     };
 
     let timerInterval;
@@ -163,14 +163,16 @@
         return;
       }
 
+      // Show quiz iframe and hide input form
       document.querySelector(".input-section").style.display = "none";
       document.querySelector(".form-section").style.display = "block";
+
       document.getElementById("displayName").innerText = name;
       document.getElementById("quizFrame").src = formLink;
       document.getElementById("quizFrame").style.display = "block";
 
-      // Start 30-minute countdown
-      let timer = 30 * 60; // 30 minutes
+      // Get timer limit for this quiz or default to 30 minutes (in seconds)
+      let timer = timeLimits[key] || 30 * 60;
       const timerDisplay = document.getElementById("timer");
 
       function updateTimer() {
@@ -181,6 +183,7 @@
         if (--timer < 0) {
           clearInterval(timerInterval);
           alert("Time's up! Please submit your quiz.");
+          // Disable interaction with iframe
           document.getElementById('quizFrame').style.pointerEvents = 'none';
         }
       }
