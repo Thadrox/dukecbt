@@ -1,11 +1,10 @@
+Restrictions and term selection code
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Duke CBT System</title>
-  <meta name="theme-color" content="#007bff" />
-  <link rel="manifest" href="manifest.json" />
+  <title>Duke CBT Exam</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,6 +12,7 @@
       margin: 0;
       padding: 0;
     }
+
     .container {
       max-width: 800px;
       margin: 30px auto;
@@ -21,12 +21,11 @@
       border-radius: 10px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
-    .hidden {
-      display: none;
-    }
+
     h1, h2, h3 {
       text-align: center;
     }
+
     input[type="text"], select {
       width: 100%;
       padding: 12px;
@@ -34,6 +33,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+
     button {
       padding: 12px 20px;
       background-color: #007bff;
@@ -43,8 +43,9 @@
       border-radius: 5px;
       cursor: pointer;
       display: block;
-      margin: 15px auto;
+      margin: auto;
     }
+
     iframe {
       width: 100%;
       height: 1000px;
@@ -52,37 +53,22 @@
       display: none;
       margin-top: 20px;
     }
+
+    .form-section {
+      display: none;
+    }
+
     label {
       font-weight: bold;
-    }
-    .logo {
-      display: block;
-      margin: 0 auto 20px;
-      max-width: 150px;
-      height: auto;
-    }
-    #timer {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      color: #007bff;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Welcome Page -->
-    <div id="welcomePage">
-      <img src="logo.png" alt="Duke CBT Logo" class="logo" />
-      <h1>Welcome to Duke CBT</h1>
-      <p style="text-align:center">Click below to begin your test session</p>
-      <button onclick="showSelection()">Continue</button>
-    </div>
+    <h1>Duke CBT System</h1>
+    <h2>Select Term, Subject & Class</h2>
 
-    <!-- Quiz Setup Section -->
-    <div id="selectionPage" class="hidden">
-      <h2>Select Class, Subject, and Term</h2>
+    <div class="input-section">
       <label for="studentName">Full Name:</label>
       <input type="text" id="studentName" placeholder="Enter your full name" />
 
@@ -110,138 +96,76 @@
         <option value="third">Third Term</option>
       </select>
 
-      <button onclick="confirmAndStart()">Start Quiz</button>
+      <button onclick="startQuiz()">Start Quiz</button>
     </div>
 
-    <!-- Confirmation Page -->
-    <div id="confirmationPage" class="hidden">
-      <h3>Please Confirm Your Details:</h3>
-      <p><strong>Name:</strong> <span id="confName"></span></p>
-      <p><strong>Class:</strong> <span id="confClass"></span></p>
-      <p><strong>Subject:</strong> <span id="confSubject"></span></p>
-      <p><strong>Term:</strong> <span id="confTerm"></span></p>
-      <button onclick="startQuiz()">Confirm and Begin</button>
-      <button onclick="goBack()">Go Back</button>
-    </div>
-
-    <!-- Quiz Section -->
-    <div id="quizSection" class="hidden">
+    <div class="form-section">
       <h3>Good luck, <span id="displayName"></span>!</h3>
-      <div id="timer">Time Left: 30:00</div>
       <iframe id="quizFrame" src=""></iframe>
     </div>
   </div>
 
   <script>
+    // ✅ Approved students list
+    const allowedNames = [
+      "Precious Duke",
+      "Chinedu Okafor",
+      "Adaobi Nwosu",
+      "Ngozi Chukwu",
+      "Samuel Eze"
+    ];
+
+    // ✅ All quiz links mapped by: class_subject_term
     const quizLinks = {
-      'JSS1_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true'
-      // Add more links as needed
+      // JSS1 Agric
+      'JSS1_agric_first': 'https://form-link.com/jss1-agric-first',
+      'JSS1_agric_second': 'https://form-link.com/jss1-agric-second',
+      'JSS1_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
+
+      // JSS1 Home Economics
+      'JSS1_homeecons_first': 'https://form-link.com/jss1-homeecons-first',
+      'JSS1_homeecons_second': 'https://form-link.com/jss1-homeecons-second',
+      'JSS1_homeecons_third': 'https://form-link.com/jss1-homeecons-third',
+
+      // JSS1 Computer
+      'JSS1_computer_first': 'https://form-link.com/jss1-computer-first',
+      'JSS1_computer_second': 'https://form-link.com/jss1-computer-second',
+      'JSS1_computer_third': 'https://form-link.com/jss1-computer-third',
+
+      // Add JSS2 and JSS3 mappings below as needed...
     };
-
-    function showSelection() {
-      document.getElementById('welcomePage').classList.add('hidden');
-      document.getElementById('selectionPage').classList.remove('hidden');
-    }
-
-    function confirmAndStart() {
-      const name = document.getElementById("studentName").value.trim();
-      const cls = document.getElementById("classSelect").value;
-      const subject = document.getElementById("subjectSelect").value;
-      const term = document.getElementById("termSelect").value;
-
-      if (!name || !cls || !subject || !term) {
-        alert("Please fill all fields before continuing.");
-        return;
-      }
-
-      // Load allowed names from localStorage
-      let allowedNames = [];
-      try {
-        allowedNames = JSON.parse(localStorage.getItem("allowedNames")) || [];
-      } catch (e) {
-        console.error("Error reading allowed names");
-      }
-
-      if (!allowedNames.some(n => n.toLowerCase() === name.toLowerCase())) {
-        alert("Access Denied: Your name is not authorized for this test.");
-        return;
-      }
-
-      // Show confirmation
-      document.getElementById("confName").innerText = name;
-      document.getElementById("confClass").innerText = cls;
-      document.getElementById("confSubject").innerText = subject;
-      document.getElementById("confTerm").innerText = term;
-
-      document.getElementById('selectionPage').classList.add('hidden');
-      document.getElementById('confirmationPage').classList.remove('hidden');
-    }
-
-    function goBack() {
-      document.getElementById('confirmationPage').classList.add('hidden');
-      document.getElementById('selectionPage').classList.remove('hidden');
-    }
 
     function startQuiz() {
       const name = document.getElementById("studentName").value.trim();
-      const cls = document.getElementById("classSelect").value;
-      const subject = document.getElementById("subjectSelect").value;
-      const term = document.getElementById("termSelect").value;
-      const key = `${cls}_${subject}_${term}`;
-      const formLink = quizLinks[key];
+      const selectedClass = document.getElementById("classSelect").value;
+      const selectedSubject = document.getElementById("subjectSelect").value;
+      const selectedTerm = document.getElementById("termSelect").value;
 
-      if (!formLink) {
-        alert("Quiz not available for selected option.");
+      if (!name || !selectedClass || !selectedSubject || !selectedTerm) {
+        alert("Please fill in all fields.");
         return;
       }
 
-      document.getElementById('confirmationPage').classList.add('hidden');
-      document.getElementById('quizSection').classList.remove('hidden');
-      document.getElementById("displayName").innerText = name;
-      const iframe = document.getElementById("quizFrame");
-      iframe.src = formLink;
-      iframe.style.display = "block";
-
-      // Timer Logic
-      let timer = 30 * 60; // 30 minutes
-      const timerDisplay = document.getElementById("timer");
-      let graceShown = false;
-
-      function updateTimer() {
-        const minutes = Math.floor(timer / 60);
-        const seconds = timer % 60;
-        timerDisplay.textContent = `Time Left: ${minutes}:${seconds.toString().padStart(2, "0")}`;
-
-        if (timer === 0) {
-          clearInterval(timerInterval);
-          alert("Time's up! Please submit your quiz now.");
-          iframe.style.pointerEvents = "none";
-
-          // Grace countdown
-          let grace = 15;
-          const graceInterval = setInterval(() => {
-            timerDisplay.textContent = `Grace Period: ${grace} seconds remaining`;
-            if (grace-- <= 0) {
-              clearInterval(graceInterval);
-              alert("Auto-submitting and reloading...");
-              location.reload();
-            }
-          }, 1000);
-        }
-        timer--;
+      // Case-insensitive name check
+      const isAllowed = allowedNames.map(n => n.toLowerCase()).includes(name.toLowerCase());
+      if (!isAllowed) {
+        alert("Access Denied! Your name is not on the approved student list.");
+        return;
       }
 
-      updateTimer();
-      timerInterval = setInterval(updateTimer, 1000);
-    }
+      const key = `${selectedClass}_${selectedSubject}_${selectedTerm}`;
+      const formLink = quizLinks[key];
 
-    // Register service worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(reg => console.log('Service Worker registered.', reg))
-          .catch(err => console.error('Service Worker failed:', err));
-      });
+      if (!formLink) {
+        alert("This quiz link is not yet set for your selection.");
+        return;
+      }
+
+      document.querySelector(".input-section").style.display = "none";
+      document.querySelector(".form-section").style.display = "block";
+      document.getElementById("displayName").innerText = name;
+      document.getElementById("quizFrame").src = formLink;
+      document.getElementById("quizFrame").style.display = "block";
     }
   </script>
 </body>
