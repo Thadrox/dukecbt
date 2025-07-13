@@ -1,0 +1,149 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duke CBT Admin Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 15px 0 5px;
+    }
+    textarea, input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Duke CBT Admin Panel</h1><div id="loginSection">
+  <label for="adminPass">Enter Admin Password:</label>
+  <input type="password" id="adminPass" />
+  <button onclick="checkLogin()">Login</button>
+</div>
+
+<div id="adminPanel" class="hidden">
+  <div class="section">
+    <h2>1. Allowed Student Names</h2>
+    <label for="nameList">Comma-separated names:</label>
+    <textarea id="nameList" rows="4"></textarea>
+    <button onclick="saveNames()">Save Names</button>
+  </div>
+
+  <div class="section">
+    <h2>2. Google Form Links</h2>
+    <label for="quizLinks">Enter quiz keys and links (format: key|url):</label>
+    <textarea id="quizLinks" rows="6"></textarea>
+    <button onclick="saveLinks()">Save Links</button>
+  </div>
+
+  <div class="section">
+    <h2>3. Time Settings</h2>
+    <label for="timeSettings">Enter durations in minutes (format: key|minutes):</label>
+    <textarea id="timeSettings" rows="4"></textarea>
+    <button onclick="saveTimes()">Save Time Settings</button>
+  </div>
+
+  <div class="section">
+    <h2>4. Access Logs</h2>
+    <button onclick="viewLogs()">View Logs</button>
+    <pre id="logOutput"></pre>
+  </div>
+</div>
+
+  </div>  <script>
+    const ADMIN_PASSWORD = "dukeadmin123"; // Change this to your desired password
+
+    function checkLogin() {
+      const pass = document.getElementById("adminPass").value;
+      if (pass === ADMIN_PASSWORD) {
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("adminPanel").classList.remove("hidden");
+        loadStoredData();
+      } else {
+        alert("Incorrect password.");
+      }
+    }
+
+    function saveNames() {
+      const names = document.getElementById("nameList").value;
+      localStorage.setItem("allowedNames", names);
+      alert("Names updated.");
+    }
+
+    function saveLinks() {
+      const raw = document.getElementById("quizLinks").value;
+      const entries = raw.split('\n');
+      const data = {};
+      entries.forEach(line => {
+        const [key, url] = line.split('|');
+        if (key && url) data[key.trim()] = url.trim();
+      });
+      localStorage.setItem("quizLinks", JSON.stringify(data));
+      alert("Quiz links saved.");
+    }
+
+    function saveTimes() {
+      const raw = document.getElementById("timeSettings").value;
+      const entries = raw.split('\n');
+      const data = {};
+      entries.forEach(line => {
+        const [key, mins] = line.split('|');
+        if (key && mins) data[key.trim()] = parseInt(mins.trim());
+      });
+      localStorage.setItem("quizDurations", JSON.stringify(data));
+      alert("Time durations saved.");
+    }
+
+    function viewLogs() {
+      const logs = localStorage.getItem("accessLogs") || "No logs yet.";
+      document.getElementById("logOutput").textContent = logs;
+    }
+
+    function loadStoredData() {
+      document.getElementById("nameList").value = localStorage.getItem("allowedNames") || "";
+      const quizLinks = JSON.parse(localStorage.getItem("quizLinks") || '{}');
+      const linkLines = Object.entries(quizLinks).map(([k, v]) => `${k}|${v}`).join('\n');
+      document.getElementById("quizLinks").value = linkLines;
+
+      const quizTimes = JSON.parse(localStorage.getItem("quizDurations") || '{}');
+      const timeLines = Object.entries(quizTimes).map(([k, v]) => `${k}|${v}`).join('\n');
+      document.getElementById("timeSettings").value = timeLines;
+    }
+  </script></body>
+</html>
