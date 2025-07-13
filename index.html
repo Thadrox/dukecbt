@@ -76,29 +76,34 @@
       margin-top: 10px;
     }
     /* Hide all main sections initially */
-    #welcomeLanding, #selectionSection, #quizSection, #timesUpSection {
+    #landingPage, #namePage, #selectionPage, #quizPage, #timesUpPage {
       display: none;
     }
-    /* Show welcome landing first */
-    #welcomeLanding {
+    /* Show landing page first */
+    #landingPage {
       display: block;
     }
   </style>
 </head>
 <body>
 
-  <!-- Step 1: Welcome Landing Page -->
-  <div class="container" id="welcomeLanding">
+  <!-- Step 1: Landing Page -->
+  <div class="container" id="landingPage">
     <img class="logo" src="https://raw.githubusercontent.com/Thadrox/dukecbt/refs/heads/main/logo.png" alt="Duke CBT Logo" />
     <h1>Welcome to Duke CBT System</h1>
-    <label for="landingNameInput">Please enter your full name to start</label>
-    <input type="text" id="landingNameInput" placeholder="Enter your full name" />
-    <button id="landingStartBtn">Click to Start Attempt</button>
+    <button id="landingStartBtn">Click to Start</button>
   </div>
 
-  <!-- Step 2: Selection Page (class, subject, term) -->
-  <div class="container" id="selectionSection">
-    <h2>Hello, <span id="studentNameDisplay"></span>!</h2>
+  <!-- Step 2: Name Input Page -->
+  <div class="container" id="namePage">
+    <h2>Please Enter Your Full Name</h2>
+    <input type="text" id="studentNameInput" placeholder="Enter your full name" />
+    <button id="nameNextBtn">Next</button>
+  </div>
+
+  <!-- Step 3: Selection Page -->
+  <div class="container" id="selectionPage">
+    <h2>Hello, <span id="displayStudentName"></span>!</h2>
     <h3>Select Term, Subject & Class to Begin</h3>
 
     <label for="classSelect">Class:</label>
@@ -128,15 +133,15 @@
     <button id="startQuizBtn">Start Quiz</button>
   </div>
 
-  <!-- Step 3: Quiz Section -->
-  <div class="container" id="quizSection">
+  <!-- Step 4: Quiz Page -->
+  <div class="container" id="quizPage">
     <div id="timer">Time Remaining: --:--</div>
     <h3>Good luck, <span id="displayName"></span>!</h3>
     <iframe id="quizFrame" src=""></iframe>
   </div>
 
-  <!-- Time's Up Section -->
-  <div class="container" id="timesUpSection">
+  <!-- Time's Up Page -->
+  <div class="container" id="timesUpPage">
     <h2>⏰ Time's Up!</h2>
     <p>Please submit your answers if you haven't already.</p>
     <button onclick="restartQuiz()">Restart Quiz for Next Student</button>
@@ -168,29 +173,32 @@
   let countdownInterval;
   let currentStudentName = "";
 
-  // Step 1: Handle Welcome Landing "Click to Start Attempt"
+  // Step 1 → 2
   document.getElementById("landingStartBtn").addEventListener("click", () => {
-    const nameInput = document.getElementById("landingNameInput").value.trim();
+    document.getElementById("landingPage").style.display = "none";
+    document.getElementById("namePage").style.display = "block";
+  });
+
+  // Step 2 → 3
+  document.getElementById("nameNextBtn").addEventListener("click", () => {
+    const nameInput = document.getElementById("studentNameInput").value.trim();
     if (!nameInput) {
       alert("Please enter your full name to proceed.");
       return;
     }
-
     const allowedLower = allowedNames.map(n => n.toLowerCase());
     if (!allowedLower.includes(nameInput.toLowerCase())) {
       alert("Access Denied! Your name is not on the approved student list.");
       return;
     }
-
     currentStudentName = nameInput;
-    document.getElementById("studentNameDisplay").textContent = currentStudentName;
+    document.getElementById("displayStudentName").textContent = currentStudentName;
 
-    // Move to selection page
-    document.getElementById("welcomeLanding").style.display = "none";
-    document.getElementById("selectionSection").style.display = "block";
+    document.getElementById("namePage").style.display = "none";
+    document.getElementById("selectionPage").style.display = "block";
   });
 
-  // Step 2: Handle Start Quiz button on selection page
+  // Step 3 → 4 (Start quiz)
   document.getElementById("startQuizBtn").addEventListener("click", () => {
     const cls = document.getElementById("classSelect").value.toLowerCase();
     const subject = document.getElementById("subjectSelect").value.toLowerCase();
@@ -210,9 +218,9 @@
       return;
     }
 
-    // Show quiz section, hide selection
-    document.getElementById("selectionSection").style.display = "none";
-    document.getElementById("quizSection").style.display = "block";
+    document.getElementById("selectionPage").style.display = "none";
+    document.getElementById("quizPage").style.display = "block";
+
     document.getElementById("displayName").textContent = currentStudentName;
 
     const iframe = document.getElementById("quizFrame");
@@ -251,9 +259,8 @@
   }
 
   function endQuiz() {
-    // Hide quiz section, show times up section
-    document.getElementById("quizSection").style.display = "none";
-    document.getElementById("timesUpSection").style.display = "block";
+    document.getElementById("quizPage").style.display = "none";
+    document.getElementById("timesUpPage").style.display = "block";
   }
 
   function restartQuiz() {
