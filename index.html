@@ -175,14 +175,13 @@
     'jss2_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
     'jss2_homeecons_third': 'https://your-link-here.com',
     'jss2_computer_third': 'https://your-link-here.com',
-    
   };
 
   const quizTimes = {
     'jss1_agric_first': 45,
     'jss1_homeecons_first': 40,
     'jss1_computer_first': 35,
-    // add others here...
+    // Add more quizTimes if needed
   };
 
   let countdownInterval;
@@ -208,7 +207,6 @@
     }
     currentStudentName = nameInput;
     document.getElementById("displayStudentName").textContent = currentStudentName;
-
     document.getElementById("namePage").style.display = "none";
     document.getElementById("selectionPage").style.display = "block";
   });
@@ -228,27 +226,39 @@
     const formLink = quizLinks[key];
     const quizTime = quizTimes[key];
 
-    if (!formLink || !quizTime) {
-      alert("Quiz not set up for your selection yet.");
-      return;
-    }
-
     document.getElementById("selectionPage").style.display = "none";
     document.getElementById("quizPage").style.display = "block";
 
-    document.getElementById("displayName").textContent = currentStudentName;
+    if (!formLink || !quizTime) {
+      document.getElementById("messageArea").innerText = "❌ This quiz is not available yet. Please check back later.";
+      document.getElementById("quizFrame").style.display = "none";
+      document.getElementById("timer").style.display = "none";
+      document.getElementById("goBackBtn").style.display = "block";
+      return;
+    }
 
+    document.getElementById("displayName").textContent = currentStudentName;
     const iframe = document.getElementById("quizFrame");
     iframe.src = formLink;
     iframe.style.display = "block";
+    document.getElementById("messageArea").innerText = "";
+    document.getElementById("timer").style.display = "block";
+    document.getElementById("goBackBtn").style.display = "none";
 
     startTimer(quizTime);
+  });
+
+  // Back button to return to selection
+  document.getElementById("goBackBtn").addEventListener("click", () => {
+    document.getElementById("quizPage").style.display = "none";
+    document.getElementById("selectionPage").style.display = "block";
+    document.getElementById("messageArea").innerText = "";
+    document.getElementById("goBackBtn").style.display = "none";
   });
 
   function startTimer(minutes) {
     let timeLeft = minutes * 60;
     const timerEl = document.getElementById("timer");
-
     timerEl.classList.remove("warning", "timeup");
 
     countdownInterval = setInterval(() => {
@@ -265,7 +275,6 @@
         timerEl.textContent = "Time's Up!";
         timerEl.classList.remove("warning");
         timerEl.classList.add("timeup");
-
         endQuiz();
       }
 
@@ -282,6 +291,3 @@
     location.reload();
   }
 </script>
-
-</body>
-</html>
