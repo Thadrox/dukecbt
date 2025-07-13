@@ -1,5 +1,3 @@
-Restrictions and term selection code
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,6 +42,10 @@ Restrictions and term selection code
       cursor: pointer;
       display: block;
       margin: auto;
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
     }
 
     iframe {
@@ -96,7 +98,7 @@ Restrictions and term selection code
         <option value="third">Third Term</option>
       </select>
 
-      <button onclick="startQuiz()">Start Quiz</button>
+      <button id="startBtn" disabled>Start Quiz</button>
     </div>
 
     <div class="form-section">
@@ -106,45 +108,69 @@ Restrictions and term selection code
   </div>
 
   <script>
-    // ✅ Approved students list
+    // Approved students list (case insensitive)
     const allowedNames = [
+      "Precious Duke",
+      "Chinedu Okafor",
+      "Adaobi Nwosu",
+      "Ngozi Chukwu",
+      "Samuel Eze"
     ];
 
-    // ✅ All quiz links mapped by: class_subject_term
+    // Quiz links mapped by class_subject_term
     const quizLinks = {
-      // JSS1 Agric
       'JSS1_agric_first': 'https://form-link.com/jss1-agric-first',
       'JSS1_agric_second': 'https://form-link.com/jss1-agric-second',
       'JSS1_agric_third': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
 
-      // JSS1 Home Economics
       'JSS1_homeecons_first': 'https://form-link.com/jss1-homeecons-first',
       'JSS1_homeecons_second': 'https://form-link.com/jss1-homeecons-second',
       'JSS1_homeecons_third': 'https://form-link.com/jss1-homeecons-third',
 
-      // JSS1 Computer
       'JSS1_computer_first': 'https://form-link.com/jss1-computer-first',
       'JSS1_computer_second': 'https://form-link.com/jss1-computer-second',
       'JSS1_computer_third': 'https://form-link.com/jss1-computer-third',
 
-      // Add JSS2 and JSS3 mappings below as needed...
+      // add more as needed
     };
 
-    function startQuiz() {
-      const name = document.getElementById("studentName").value.trim();
-      const selectedClass = document.getElementById("classSelect").value;
-      const selectedSubject = document.getElementById("subjectSelect").value;
-      const selectedTerm = document.getElementById("termSelect").value;
+    const studentNameInput = document.getElementById("studentName");
+    const classSelect = document.getElementById("classSelect");
+    const subjectSelect = document.getElementById("subjectSelect");
+    const termSelect = document.getElementById("termSelect");
+    const startBtn = document.getElementById("startBtn");
+    const displayName = document.getElementById("displayName");
+    const quizFrame = document.getElementById("quizFrame");
 
-      if (!name || !selectedClass || !selectedSubject || !selectedTerm) {
-        alert("Please fill in all fields.");
-        return;
+    // Enable start button only if all fields filled
+    function checkInputs() {
+      const name = studentNameInput.value.trim();
+      const selectedClass = classSelect.value;
+      const selectedSubject = subjectSelect.value;
+      const selectedTerm = termSelect.value;
+
+      if (name && selectedClass && selectedSubject && selectedTerm) {
+        startBtn.disabled = false;
+      } else {
+        startBtn.disabled = true;
       }
+    }
 
-      // Case-insensitive name check
-      const isAllowed = allowedNames.map(n => n.toLowerCase()).includes(name.toLowerCase());
-      if (!isAllowed) {
+    studentNameInput.addEventListener("input", checkInputs);
+    classSelect.addEventListener("change", checkInputs);
+    subjectSelect.addEventListener("change", checkInputs);
+    termSelect.addEventListener("change", checkInputs);
+
+    startBtn.addEventListener("click", () => {
+      const name = studentNameInput.value.trim();
+      const selectedClass = classSelect.value;
+      const selectedSubject = subjectSelect.value;
+      const selectedTerm = termSelect.value;
+
+      // Name restriction check only if name entered
+      if (!allowedNames.some(n => n.toLowerCase() === name.toLowerCase())) {
         alert("Access Denied! Your name is not on the approved student list.");
+        studentNameInput.focus();
         return;
       }
 
@@ -156,12 +182,16 @@ Restrictions and term selection code
         return;
       }
 
+      // Show quiz iframe and greeting
       document.querySelector(".input-section").style.display = "none";
       document.querySelector(".form-section").style.display = "block";
-      document.getElementById("displayName").innerText = name;
-      document.getElementById("quizFrame").src = formLink;
-      document.getElementById("quizFrame").style.display = "block";
-    }
+      displayName.textContent = name;
+      quizFrame.src = formLink;
+      quizFrame.style.display = "block";
+    });
+
+    // Initialize button state on load
+    checkInputs();
   </script>
 </body>
 </html>
