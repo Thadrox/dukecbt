@@ -83,6 +83,17 @@
     #landingPage {
       display: block;
     }
+    #messageArea {
+      margin: 15px 0;
+      color: red;
+      font-weight: bold;
+      min-height: 24px;
+    }
+    #goBackBtn {
+      background-color: #6c757d;
+      margin-top: 10px;
+      max-width: 150px;
+    }
   </style>
 </head>
 <body>
@@ -109,9 +120,9 @@
     <label for="classSelect">Class:</label>
     <select id="classSelect">
       <option value="">-- Select Class --</option>
-      <option value="JSS1">JSS1</option>
-      <option value="JSS2">JSS2</option>
-      <option value="JSS3">JSS3</option>
+      <option value="jss1">JSS1</option>
+      <option value="jss2">JSS2</option>
+      <option value="jss3">JSS3</option>
     </select>
 
     <label for="subjectSelect">Subject:</label>
@@ -137,6 +148,10 @@
   <div class="container" id="quizPage">
     <div id="timer">Time Remaining: --:--</div>
     <h3>Good luck, <span id="displayName"></span>!</h3>
+    
+    <div id="messageArea"></div>
+    <button id="goBackBtn" style="display:none;">⬅ Go Back</button>
+
     <iframe id="quizFrame" src=""></iframe>
   </div>
 
@@ -181,6 +196,12 @@
     'jss1_agric_first': 45,
     'jss1_homeecons_first': 40,
     'jss1_computer_first': 35,
+    'jss1_agric_third': 45,
+    'jss2_agric_third': 45,
+    'jss1_homeecons_third': 40,
+    'jss1_computer_third': 35,
+    'jss2_homeecons_third': 40,
+    'jss2_computer_third': 35,
     // Add more quizTimes if needed
   };
 
@@ -226,6 +247,8 @@
     const formLink = quizLinks[key];
     const quizTime = quizTimes[key];
 
+    document.getElementById("displayName").textContent = currentStudentName;
+
     document.getElementById("selectionPage").style.display = "none";
     document.getElementById("quizPage").style.display = "block";
 
@@ -237,11 +260,9 @@
       return;
     }
 
-    document.getElementById("displayName").textContent = currentStudentName;
-    const iframe = document.getElementById("quizFrame");
-    iframe.src = formLink;
-    iframe.style.display = "block";
     document.getElementById("messageArea").innerText = "";
+    document.getElementById("quizFrame").src = formLink;
+    document.getElementById("quizFrame").style.display = "block";
     document.getElementById("timer").style.display = "block";
     document.getElementById("goBackBtn").style.display = "none";
 
@@ -250,10 +271,13 @@
 
   // Back button to return to selection
   document.getElementById("goBackBtn").addEventListener("click", () => {
+    clearInterval(countdownInterval);
     document.getElementById("quizPage").style.display = "none";
     document.getElementById("selectionPage").style.display = "block";
     document.getElementById("messageArea").innerText = "";
     document.getElementById("goBackBtn").style.display = "none";
+    document.getElementById("timer").textContent = "Time Remaining: --:--";
+    document.getElementById("timer").classList.remove("warning", "timeup");
   });
 
   function startTimer(minutes) {
@@ -261,7 +285,11 @@
     const timerEl = document.getElementById("timer");
     timerEl.classList.remove("warning", "timeup");
 
+    clearInterval(countdownInterval); // Just in case
+
     countdownInterval = setInterval(() => {
+      if (timeLeft < 0) return;
+
       const mins = Math.floor(timeLeft / 60);
       const secs = timeLeft % 60;
       timerEl.textContent = `Time Remaining: ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
@@ -291,3 +319,5 @@
     location.reload();
   }
 </script>
+</body>
+</html>
