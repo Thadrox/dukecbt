@@ -2,152 +2,273 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Duke CBT Exam</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Duke CBT Quiz System</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      margin: 0;
-      padding: 0;
-    }
-
-    .container {
-      max-width: 800px;
-      margin: 30px auto;
-      background: #fff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-    }
-
-    h1, h2, h3 {
+      background: #f5f8fa;
+      margin: 0; padding: 0;
       text-align: center;
     }
-
+    header {
+      background: #007bff;
+      color: white;
+      padding: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    header img {
+      height: 50px;
+    }
+    main {
+      max-width: 700px;
+      margin: 30px auto;
+      background: white;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
     input[type="text"], select {
       width: 100%;
       padding: 12px;
-      margin: 10px 0 20px;
+      margin: 12px 0 20px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 1rem;
     }
-
     button {
-      padding: 12px 20px;
       background-color: #007bff;
       color: white;
-      font-size: 16px;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 5px;
+      padding: 12px 25px;
+      border-radius: 6px;
       cursor: pointer;
-      display: block;
-      margin: auto;
+      margin-top: 10px;
+      width: 100%;
+      transition: background-color 0.3s ease;
     }
-
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    #timer {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin: 15px 0;
+      color: #dc3545;
+    }
+    #graceMessage {
+      color: #28a745;
+      font-weight: bold;
+      margin-bottom: 20px;
+      display: none;
+    }
     iframe {
       width: 100%;
-      height: 1000px;
+      height: 700px;
       border: none;
+      margin-top: 25px;
+      border-radius: 10px;
       display: none;
-      margin-top: 20px;
-    }
-
-    .form-section {
-      display: none;
-    }
-
-    label {
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Duke CBT System</h1>
-    <h2>Select Subject & Class to Begin</h2>
+  <header>
+    <img src="https://i.imgur.com/3Z2XWQ7.png" alt="Duke Logo" />
+    Duke CBT Quiz System
+  </header>
+  <main>
+    <label for="studentName">Enter Your Full Name</label>
+    <input type="text" id="studentName" placeholder="Your full name" />
 
-    <div class="input-section">
-      <label for="studentName">Full Name:</label>
-      <input type="text" id="studentName" placeholder="Enter your full name" />
+    <label for="classSelect">Select Class</label>
+    <select id="classSelect">
+      <option value="" disabled selected>-- Select Class --</option>
+      <option value="JSS1">JSS1</option>
+      <option value="JSS2">JSS2</option>
+      <option value="JSS3">JSS3</option>
+    </select>
 
-      <label for="classSelect">Class:</label>
-      <select id="classSelect">
-        <option value="">-- Select Class --</option>
-        <option value="JSS1">JSS1</option>
-        <option value="JSS2">JSS2</option>
-        <option value="JSS3">JSS3</option>
-      </select>
+    <label for="subjectSelect">Select Subject</label>
+    <select id="subjectSelect">
+      <option value="" disabled selected>-- Select Subject --</option>
+      <option value="agric">Agricultural Science</option>
+      <option value="homeecons">Home Economics</option>
+      <option value="computer">Computer Studies</option>
+    </select>
 
-      <label for="subjectSelect">Subject:</label>
-      <select id="subjectSelect">
-        <option value="">-- Select Subject --</option>
-        <option value="agric">Agricultural Science</option>
-        <option value="homeecons">Home Economics</option>
-        <option value="computer">Computer Studies</option>
-      </select>
+    <label for="termSelect">Select Term</label>
+    <select id="termSelect">
+      <option value="" disabled selected>-- Select Term --</option>
+      <option value="first">First Term</option>
+      <option value="second">Second Term</option>
+      <option value="third">Third Term</option>
+    </select>
 
-      <label for="termSelect">Academic Term:</label>
-      <select id="termSelect">
-        <option value="">-- Select Term --</option>
-        <option value="first">First Term</option>
-        <option value="second">Second Term</option>
-        <option value="third">Third Term</option>
-      </select>
+    <button id="startBtn" disabled>Start Quiz</button>
 
-      <label for="timeSelect">Exam Time:</label>
-      <select id="timeSelect">
-        <option value="">-- Select Time --</option>
-        <option value="30mins">30 Minutes</option>
-        <option value="60mins">60 Minutes</option>
-        <option value="90mins">90 Minutes</option>
-      </select>
+    <div id="timer"></div>
+    <div id="graceMessage">Time is up! You have 15 seconds to submit your quiz.</div>
 
-      <button onclick="startQuiz()">Start Quiz</button>
-    </div>
-
-    <div class="form-section">
-      <h3>Good luck, <span id="displayName"></span>!</h3>
-      <iframe id="quizFrame" src=""></iframe>
-    </div>
-  </div>
+    <iframe id="quizFrame" src=""></iframe>
+  </main>
 
   <script>
+    const allowedNames = [
+      "Precious Duke",
+      "Chinedu Okafor",
+      "Adaobi Nwosu",
+      "Ngozi Chukwu",
+      "Samuel Eze"
+    ];
+
+    // Quiz URLs keyed by class_subject_term
     const quizLinks = {
-      'JSS1_agric_third_30mins': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-      'JSS1_homeecons_first_30mins': 'https://your-link-here.com',
-      'JSS1_computer_first_30mins': 'https://your-link-here.com',
-      // Add more links for different combinations of class, subject, term, and time
-      // Example for JSS2 Agric Second Term, 60 minutes:
-      // 'JSS2_agric_second_60mins': 'https://your-jss2-agric-second-term-60min-link.com',
+      "JSS1_agric_first": "https://form-link.com/jss1-agric-first",
+      "JSS1_agric_second": "https://form-link.com/jss1-agric-second",
+      "JSS1_agric_third": "https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true",
+      "JSS1_homeecons_first": "https://form-link.com/jss1-homeecons-first",
+      "JSS1_homeecons_second": "https://form-link.com/jss1-homeecons-second",
+      "JSS1_homeecons_third": "https://form-link.com/jss1-homeecons-third",
+      "JSS1_computer_first": "https://form-link.com/jss1-computer-first",
+      "JSS1_computer_second": "https://form-link.com/jss1-computer-second",
+      "JSS1_computer_third": "https://form-link.com/jss1-computer-third"
+      // Add more links for other classes and terms
     };
 
-    function startQuiz() {
-      const name = document.getElementById("studentName").value.trim();
-      const selectedClass = document.getElementById("classSelect").value;
-      const selectedSubject = document.getElementById("subjectSelect").value;
-      const selectedTerm = document.getElementById("termSelect").value;
-      const selectedTime = document.getElementById("timeSelect").value;
+    // Timers in minutes keyed by class_subject_term
+    const quizTimes = {
+      "JSS1_agric_first": 40,
+      "JSS1_agric_second": 40,
+      "JSS1_agric_third": 45,
+      "JSS1_homeecons_first": 35,
+      "JSS1_homeecons_second": 35,
+      "JSS1_homeecons_third": 40,
+      "JSS1_computer_first": 50,
+      "JSS1_computer_second": 50,
+      "JSS1_computer_third": 50
+      // Add more timers as needed
+    };
 
+    const studentNameInput = document.getElementById("studentName");
+    const classSelect = document.getElementById("classSelect");
+    const subjectSelect = document.getElementById("subjectSelect");
+    const termSelect = document.getElementById("termSelect");
+    const startBtn = document.getElementById("startBtn");
+    const timerDisplay = document.getElementById("timer");
+    const graceMessage = document.getElementById("graceMessage");
+    const quizFrame = document.getElementById("quizFrame");
 
-      if (!name || !selectedClass || !selectedSubject || !selectedTerm || !selectedTime) {
-        alert("Please fill all fields before starting.");
-        return;
+    let timerInterval;
+    let graceTimeout;
+    let timeLeft = 0;
+    const gracePeriod = 15; // seconds
+
+    // Enable Start button only if all fields filled
+    function checkInputs() {
+      if (
+        studentNameInput.value.trim() &&
+        classSelect.value &&
+        subjectSelect.value &&
+        termSelect.value
+      ) {
+        startBtn.disabled = false;
+      } else {
+        startBtn.disabled = true;
       }
-
-      const key = `${selectedClass}_${selectedSubject}_${selectedTerm}_${selectedTime}`;
-      const formLink = quizLinks[key];
-
-      if (!formLink) {
-        alert("Form not set up yet for this combination of subject, class, term, and time.");
-        return;
-      }
-
-      document.querySelector(".input-section").style.display = "none";
-      document.querySelector(".form-section").style.display = "block";
-      document.getElementById("displayName").innerText = name;
-      document.getElementById("quizFrame").src = formLink;
-      document.getElementById("quizFrame").style.display = "block";
     }
+
+    studentNameInput.addEventListener("input", checkInputs);
+    classSelect.addEventListener("change", checkInputs);
+    subjectSelect.addEventListener("change", checkInputs);
+    termSelect.addEventListener("change", checkInputs);
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${mins.toString().padStart(2,"0")}:${secs.toString().padStart(2,"0")}`;
+    }
+
+    function startTimer(duration) {
+      timeLeft = duration * 60;
+      timerDisplay.textContent = `Time Remaining: ${formatTime(timeLeft)}`;
+      graceMessage.style.display = "none";
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.textContent = `Time Remaining: ${formatTime(timeLeft)}`;
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerDisplay.textContent = "Time's up!";
+          graceMessage.style.display = "block";
+
+          // Disable input controls during grace
+          startBtn.disabled = true;
+          studentNameInput.disabled = true;
+          classSelect.disabled = true;
+          subjectSelect.disabled = true;
+          termSelect.disabled = true;
+
+          graceTimeout = setTimeout(() => {
+            graceMessage.textContent = "Grace period over. Please submit your quiz!";
+            // Since iframe is cross-origin, cannot auto-submit form inside iframe reliably
+            graceMessage.style.display = "none";
+            quizFrame.style.pointerEvents = "none"; // prevent further input
+          }, gracePeriod * 1000);
+        }
+      }, 1000);
+    }
+
+    startBtn.addEventListener("click", () => {
+      const name = studentNameInput.value.trim();
+      const selectedClass = classSelect.value;
+      const selectedSubject = subjectSelect.value;
+      const selectedTerm = termSelect.value;
+
+      // Name check (case insensitive)
+      const isAllowed = allowedNames.some(
+        n => n.toLowerCase() === name.toLowerCase()
+      );
+
+      if (!isAllowed) {
+        alert("Access Denied! Your name is not on the approved student list.");
+        return;
+      }
+
+      const key = `${selectedClass}_${selectedSubject}_${selectedTerm}`;
+      const quizUrl = quizLinks[key];
+      const quizTime = quizTimes[key];
+
+      if (!quizUrl) {
+        alert("Quiz for the selected class, subject, and term is not yet available.");
+        return;
+      }
+
+      if (!quizTime) {
+        alert("Timer not set for the selected quiz.");
+        return;
+      }
+
+      quizFrame.src = quizUrl;
+      quizFrame.style.display = "block";
+
+      // Disable inputs and start button
+      studentNameInput.disabled = true;
+      classSelect.disabled = true;
+      subjectSelect.disabled = true;
+      termSelect.disabled = true;
+      startBtn.disabled = true;
+
+      startTimer(quizTime);
+    });
   </script>
 </body>
 </html>
