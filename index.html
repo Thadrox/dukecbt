@@ -2,74 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Duke CBT Exam</title>
-
-  <!-- PWA Icons -->
-  <link rel="icon" type="image/png" sizes="192x192" href="https://raw.githubusercontent.com/Thadrox/dukecbt/refs/heads/main/icon-192.png" />
-  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/Thadrox/dukecbt/refs/heads/main/icon-512.png" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="https://raw.githubusercontent.com/Thadrox/dukecbt/refs/heads/main/logo.png" />
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f2f2f2;
       margin: 0; padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
     }
     .container {
-      max-width: 850px;
-      width: 90%;
-      background: white;
+      max-width: 800px;
+      margin: 30px auto;
+      background: #fff;
       padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
       text-align: center;
     }
     img.logo {
-      max-width: 150px;
-      margin-bottom: 20px;
+      max-width: 120px;
+      margin-bottom: 15px;
     }
-    h1 {
-      margin-bottom: 5px;
-      color: #007bff;
-    }
-    h2 {
-      margin-top: 0;
-      margin-bottom: 25px;
-      font-weight: normal;
-      color: #333;
-    }
-    label {
-      display: block;
-      text-align: left;
-      font-weight: bold;
-      margin-top: 15px;
+    h1, h2, h3 {
+      margin: 10px 0;
     }
     input[type="text"], select {
       width: 100%;
       padding: 12px;
-      margin-top: 5px;
+      margin: 10px 0 20px;
       border: 1px solid #ccc;
-      border-radius: 6px;
+      border-radius: 5px;
       font-size: 1rem;
     }
     button {
-      margin-top: 30px;
+      padding: 12px 20px;
       background-color: #007bff;
       color: white;
-      font-size: 18px;
-      padding: 14px 25px;
+      font-size: 16px;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #0056b3;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
     iframe {
       width: 100%;
@@ -79,30 +58,30 @@
       display: none;
     }
     .form-section {
-      margin-top: 15px;
       display: none;
-      text-align: center;
     }
-    .timer-box {
+    #timer {
       font-weight: bold;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin-top: 15px;
-      color: #d9534f; /* red */
+      color: #333;
     }
-    .welcome-screen {
-      margin-bottom: 20px;
+    #graceNotice {
+      color: #ff4500;
+      margin-top: 8px;
+      font-style: italic;
+      display: none;
     }
   </style>
 </head>
 <body>
-
-  <div class="container" id="welcomePage">
+  <div class="container" id="welcomeSection">
     <img class="logo" src="https://raw.githubusercontent.com/Thadrox/dukecbt/refs/heads/main/logo.png" alt="Duke CBT Logo" />
     <h1>Welcome to Duke CBT System</h1>
-    <h2>Please enter your details to begin</h2>
+    <h2>Select Term, Subject & Class to Begin</h2>
 
     <label for="studentName">Full Name:</label>
-    <input type="text" id="studentName" placeholder="Enter your full name" autocomplete="off" />
+    <input type="text" id="studentName" placeholder="Enter your full name" />
 
     <label for="classSelect">Class:</label>
     <select id="classSelect">
@@ -133,147 +112,145 @@
 
   <div class="container form-section" id="quizSection">
     <h3>Good luck, <span id="displayName"></span>!</h3>
-    <div class="timer-box" id="timerDisplay">Time left: <span id="timeLeft"></span></div>
+    <div id="timer">Time Left: <span id="timeLeft"></span> minutes</div>
+    <div id="graceNotice">Grace time started! Please submit your answers now.</div>
     <iframe id="quizFrame" src=""></iframe>
   </div>
 
-<script>
-  // Approved student names (case-insensitive)
-  const allowedNames = [
-    "Precious Duke",
-    "Chinedu Okafor",
-    "Adaobi Nwosu",
-    "Ngozi Chukwu",
-    "Samuel Eze"
-  ];
+  <script>
+    // === Easy to edit: Allowed student names (case-insensitive) ===
+    const allowedNames = [
+      "Precious Duke",
+      "Chinedu Okafor",
+      "Adaobi Nwosu",
+      "Ngozi Chukwu",
+      "Samuel Eze"
+    ];
 
-  // Map quiz links by class_subject_term keys
-  const quizLinks = {
-    'JSS1_agric_first': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
-    'JSS1_agric_second': 'https://your-link-here.com',
-    'JSS1_agric_third': 'https://your-link-here.com',
+    // === Easy to edit: Google Form links for each class_subject_term ===
+    // Key format: class_subject_term (all lowercase)
+    const quizLinks = {
+      'jss1_agric_first': 'https://docs.google.com/forms/d/e/1FAIpQLSfXcjj_WLGZd5YGlxWSoyiJTyvo2rPqBxfS7EXfKz1LS-bHNQ/viewform?embedded=true',
+      'jss1_agric_second': 'https://your-link-here.com',
+      'jss1_agric_third': 'https://your-link-here.com',
 
-    'JSS1_homeecons_first': 'https://your-link-here.com',
-    'JSS1_homeecons_second': 'https://your-link-here.com',
-    'JSS1_homeecons_third': 'https://your-link-here.com',
+      'jss1_homeecons_first': 'https://your-link-here.com',
+      'jss1_homeecons_second': 'https://your-link-here.com',
+      'jss1_homeecons_third': 'https://your-link-here.com',
 
-    'JSS1_computer_first': 'https://your-link-here.com',
-    'JSS1_computer_second': 'https://your-link-here.com',
-    'JSS1_computer_third': 'https://your-link-here.com',
+      'jss1_computer_first': 'https://your-link-here.com',
+      'jss1_computer_second': 'https://your-link-here.com',
+      'jss1_computer_third': 'https://your-link-here.com',
 
-    // Add JSS2, JSS3 similarly...
-  };
+      // Add JSS2 and JSS3 links similarly...
+    };
 
-  // Quiz time in minutes per class_subject_term key
-  const quizTimes = {
-    'JSS1_agric_first': 45,
-    'JSS1_agric_second': 45,
-    'JSS1_agric_third': 45,
+    // === Easy to edit: Quiz times in minutes for each quiz key ===
+    const quizTimes = {
+      'jss1_agric_first': 40,
+      'jss1_agric_second': 40,
+      'jss1_agric_third': 40,
 
-    'JSS1_homeecons_first': 40,
-    'JSS1_homeecons_second': 40,
-    'JSS1_homeecons_third': 40,
+      'jss1_homeecons_first': 35,
+      'jss1_homeecons_second': 35,
+      'jss1_homeecons_third': 35,
 
-    'JSS1_computer_first': 30,
-    'JSS1_computer_second': 30,
-    'JSS1_computer_third': 30,
+      'jss1_computer_first': 30,
+      'jss1_computer_second': 30,
+      'jss1_computer_third': 30,
 
-    // Add more times for other combos...
-  };
+      // Add other times as needed...
+    };
 
-  const graceSeconds = 15; // 15 seconds grace period after timer ends
+    // Timer variables
+    let totalTime = 0; // in seconds
+    let timerInterval;
+    let graceStarted = false;
 
-  const startBtn = document.getElementById("startBtn");
-  const welcomePage = document.getElementById("welcomePage");
-  const quizSection = document.getElementById("quizSection");
-  const displayName = document.getElementById("displayName");
-  const quizFrame = document.getElementById("quizFrame");
-  const timerDisplay = document.getElementById("timerDisplay");
-  const timeLeftSpan = document.getElementById("timeLeft");
+    // Elements
+    const startBtn = document.getElementById("startBtn");
+    const studentNameInput = document.getElementById("studentName");
+    const classSelect = document.getElementById("classSelect");
+    const subjectSelect = document.getElementById("subjectSelect");
+    const termSelect = document.getElementById("termSelect");
+    const quizFrame = document.getElementById("quizFrame");
+    const welcomeSection = document.getElementById("welcomeSection");
+    const quizSection = document.getElementById("quizSection");
+    const displayName = document.getElementById("displayName");
+    const timeLeftSpan = document.getElementById("timeLeft");
+    const graceNotice = document.getElementById("graceNotice");
 
-  let countdownInterval = null;
-  let graceTimeout = null;
+    startBtn.addEventListener("click", () => {
+      const name = studentNameInput.value.trim();
+      const cls = classSelect.value.toLowerCase();
+      const subject = subjectSelect.value.toLowerCase();
+      const term = termSelect.value.toLowerCase();
 
-  startBtn.addEventListener("click", () => {
-    const name = document.getElementById("studentName").value.trim();
-    const classSelected = document.getElementById("classSelect").value;
-    const subjectSelected = document.getElementById("subjectSelect").value;
-    const termSelected = document.getElementById("termSelect").value;
-
-    if (!name || !classSelected || !subjectSelected || !termSelected) {
-      alert("Please fill all fields.");
-      return;
-    }
-
-    // Check name is in allowed list (case-insensitive)
-    if (!allowedNames.some(n => n.toLowerCase() === name.toLowerCase())) {
-      alert("Access Denied! Your name is not on the approved student list.");
-      return;
-    }
-
-    const key = `${classSelected}_${subjectSelected}_${termSelected}`;
-    const formUrl = quizLinks[key];
-    const quizTime = quizTimes[key];
-
-    if (!formUrl) {
-      alert("Quiz link not found for your selection.");
-      return;
-    }
-    if (!quizTime) {
-      alert("Quiz time not set for your selection.");
-      return;
-    }
-
-    // Show quiz section
-    welcomePage.style.display = "none";
-    quizSection.style.display = "block";
-    displayName.textContent = name;
-    quizFrame.src = formUrl;
-    quizFrame.style.display = "block";
-
-    // Initialize and start timer
-    startTimer(quizTime);
-  });
-
-  function startTimer(minutes) {
-    let totalSeconds = minutes * 60;
-    timerDisplay.style.color = "#28a745"; // green
-
-    updateTimeDisplay(totalSeconds);
-
-    countdownInterval = setInterval(() => {
-      totalSeconds--;
-      if (totalSeconds >= 0) {
-        updateTimeDisplay(totalSeconds);
-      } else {
-        clearInterval(countdownInterval);
-        timerDisplay.style.color = "#d9534f"; // red
-        timerDisplay.textContent = `Time's up! You have ${graceSeconds} seconds to submit.`;
-
-        // Grace period countdown
-        let graceLeft = graceSeconds;
-        graceTimeout = setInterval(() => {
-          graceLeft--;
-          if (graceLeft > 0) {
-            timerDisplay.textContent = `Time's up! You have ${graceLeft} seconds to submit.`;
-          } else {
-            clearInterval(graceTimeout);
-            alert("Time is over! The quiz will now be locked.");
-            // Optionally disable iframe or reload page:
-            quizFrame.style.pointerEvents = "none";
-            timerDisplay.textContent = "Quiz time expired.";
-          }
-        }, 1000);
+      if (!name || !cls || !subject || !term) {
+        alert("Please fill all fields.");
+        return;
       }
-    }, 1000);
-  }
 
-  function updateTimeDisplay(seconds) {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    timeLeftSpan.textContent = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-  }
-</script>
+      // Check if name is allowed (case-insensitive)
+      const allowedLower = allowedNames.map(n => n.toLowerCase());
+      if (!allowedLower.includes(name.toLowerCase())) {
+        alert("Access Denied! Your name is not on the approved student list.");
+        return;
+      }
 
+      const key = `${cls}_${subject}_${term}`;
+      const formLink = quizLinks[key];
+      const timeMinutes = quizTimes[key];
+
+      if (!formLink) {
+        alert("This quiz link is not set for your selection yet.");
+        return;
+      }
+
+      if (!timeMinutes) {
+        alert("Quiz time is not set for this quiz.");
+        return;
+      }
+
+      // Show quiz section
+      welcomeSection.style.display = "none";
+      quizSection.style.display = "block";
+      displayName.textContent = name;
+      quizFrame.src = formLink;
+      quizFrame.style.display = "block";
+
+      // Start timer
+      totalTime = timeMinutes * 60; // convert to seconds
+      graceStarted = false;
+      graceNotice.style.display = "none";
+      updateTimerDisplay();
+      clearInterval(timerInterval);
+      timerInterval = setInterval(timerTick, 1000);
+    });
+
+    function timerTick() {
+      if (totalTime > 0) {
+        totalTime--;
+        updateTimerDisplay();
+
+        if (totalTime === 15 && !graceStarted) {
+          graceStarted = true;
+          graceNotice.style.display = "block";
+          alert("Time is almost up! You have 15 seconds left to submit your answers.");
+        }
+      } else {
+        clearInterval(timerInterval);
+        graceNotice.style.display = "none";
+        alert("Time is up! Please submit your quiz now.");
+        // Optionally disable the iframe or add other logic here
+      }
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(totalTime / 60);
+      const seconds = totalTime % 60;
+      timeLeftSpan.textContent = `${minutes}:${seconds.toString().padStart(2,'0')}`;
+    }
+  </script>
 </body>
 </html>
