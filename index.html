@@ -194,9 +194,10 @@ const quizTimes = {
   'jss1_agric_first': 45,
   'jss1_homeecons_first': 40,
   'jss1_computer_first': 35,
-  'jss1_agric_third': 6300,
+  'jss1_agric_third': 105,  // 6300 seconds ÷ 60
   'jss1_homeecons_third': 60,
-  'jss2_agric_third': 6300,
+  'jss2_agric_third': 105,  // 6300 seconds ÷ 60
+};
   // other quiz times...
 
 };
@@ -286,7 +287,8 @@ function startTimer(minutes) {
 
 function submitEarly() {
   clearInterval(countdownInterval); // stop timer
-  endQuiz(); // take to Time’s Up page
+  saveResult();                      // save the current quiz info to localStorage
+  endQuiz();                        // proceed to Time’s Up page
   }
 function endQuiz() {
   document.getElementById("quizPage").style.display = "none";
@@ -295,21 +297,102 @@ function endQuiz() {
 
 function restartQuiz() {
   location.reload();
+  }
+
+ 
+  function showSavedResults() {
+  const results = JSON.parse(localStorage.getItem("quizResults") || "[]");
+  const resultDiv = document.getElementById("savedResults");
+  if (results.length === 0) {
+    resultDiv.innerHTML = "<p>No quiz results found yet.</p>";
+    return;
+  }
+
+  let html = "<ul>";
+  results.forEach((res, i) => {
+    html += `<li><strong>${i + 1}. ${toTitleCase(res.name)}</strong> - ${res.subject || "N/A"} - ${res.class || "N/A"} - ${res.term || "N/A"} - Time: ${res.timeTaken || "?"}</li>`;
+  });
+  html += "</ul>";
+  resultDiv.innerHTML = html;
 }
+  function toTitleCase(str) {
+  return str.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+  }
+
+  let html = "<ul>";
+  results.forEach((res, i) => {
+    html += `<li><strong>${i + 1}. ${res.name}</strong> - ${res.subject || "N/A"} - ${res.class || "N/A"} - ${res.term || "N/A"} - Time: ${res.timeTaken || "?"} mins</li>`;
+  });
+  html += "</ul>";
+  resultDiv.innerHTML = html;
+}
+
+function downloadResults() {
+  const results = JSON.parse(localStorage.getItem("quizResults") || "[]");
+  if (results.length === 0) return alert("No results to download.");
+
+  const csv = results.map((res, i) => 
+    `${i + 1},"${res.name}","${res.class}","${res.subject}","${res.term}","${res.timeTaken}"`
+  ).join("\n");
+
+  const blob = new Blob(["S/N,Name,Class,Subject,Term,Time Taken\n" + csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "duke_cbt_results.csv";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+  function clearResults() {
+  if (confirm("Are you sure you want to clear all saved results?")) {
+    localStorage.removeItem("quizResults");
+    document.getElementById("savedResults").innerHTML = "";
+    alert("All results cleared.");
+  }
+  }
+  function saveResult() {
+  const result = {
+    name: currentStudentName,
+    class: document.getElementById("classSelect").value,
+    subject: document.getElementById("subjectSelect").value,
+    term: document.getElementById("termSelect").value,
+    timeTaken: document.getElementById("timer").textContent.replace("Time Remaining: ", "")
+  };
+    function calculateTimeTaken() {
+  const timeText = document.getElementById("timer").textContent;
+  if (timeText.includes("Time's Up")) return "0 mins";
+  const match = timeText.match(/(\d+):(\d+)/);
+  if (!match) return "N/A";
+  const mins = parseInt(match[1]);
+  const secs = parseInt(match[2]);
+  return `${mins} mins ${secs} secs`;
+    }
+
+  // Read existing saved results or create new array
+  const results = JSON.parse(localStorage.getItem("quizResults") || "[]");
+  results.push(result);
+  localStorage.setItem("quizResults", JSON.stringify(results));
+  }
+  function calculateTimeTaken() {
+  const timeText = document.getElementById("timer").textContent;
+  if (timeText.includes("Time's Up")) return "0 mins";
+  const match = timeText.match(/(\d+):(\d+)/);
+  if (!match) return "N/A";
+  const mins = parseInt(match[1]);
+  const secs = parseInt(match[2]);
+  return `${mins} mins ${secs} secs`;
+  }
 </script>
-  
-<!-- 📊 Results Viewing Area -->
+  <!-- 📊 Results Viewing Area -->
 <div class="container" style="margin-top:40px;">
   <h2>📘 Quiz Results</h2>
   <button onclick="showSavedResults()">📊 View All Results</button>
   <button onclick="downloadResults()">📥 Download Results</button>
+  <button onclick="clearResults()">🗑️ Clear Results</button>
   <div id="savedResults" style="margin-top: 15px; text-align: left;"></div>
 </div>
-<!-- 📊 Results Viewing Area -->
-<div class="container" style="margin-top:40px;">
-  <h2>Results Area</h2>
-  <button onclick="showSavedResults()">📊 View My Quiz Results</button>
-  <div id="savedResults" style="margin-top: 15px;"></div>
-</div>  
+  <button onclick="clearResults()">🗑️ Clear Results</button>
 </body>
 </html>
