@@ -160,7 +160,8 @@ const allowedNames = [
   "Adaobi Nwosu",
   "Ngozi Chukwu",
   "Samuel Eze",
-  "Duke"
+  "Duke",
+  "Miracle"
 ];
 
 const quizLinks = {
@@ -194,12 +195,10 @@ const quizTimes = {
   'jss1_agric_first': 45,
   'jss1_homeecons_first': 40,
   'jss1_computer_first': 35,
-  'jss1_agric_third': 105,  // 6300 seconds ÷ 60
+  'jss1_agric_third': 105,
   'jss1_homeecons_third': 60,
-  'jss2_agric_third': 105,  // 6300 seconds ÷ 60
-};
+  'jss2_agric_third': 105
   // other quiz times...
-
 };
 
 let countdownInterval;
@@ -303,6 +302,7 @@ function restartQuiz() {
   function showSavedResults() {
   const results = JSON.parse(localStorage.getItem("quizResults") || "[]");
   const resultDiv = document.getElementById("savedResults");
+
   if (results.length === 0) {
     resultDiv.innerHTML = "<p>No quiz results found yet.</p>";
     return;
@@ -319,13 +319,7 @@ function restartQuiz() {
   return str.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
   }
 
-  let html = "<ul>";
-  results.forEach((res, i) => {
-    html += `<li><strong>${i + 1}. ${res.name}</strong> - ${res.subject || "N/A"} - ${res.class || "N/A"} - ${res.term || "N/A"} - Time: ${res.timeTaken || "?"} mins</li>`;
-  });
-  html += "</ul>";
-  resultDiv.innerHTML = html;
-}
+
 
 function downloadResults() {
   const results = JSON.parse(localStorage.getItem("quizResults") || "[]");
@@ -352,23 +346,15 @@ function downloadResults() {
     alert("All results cleared.");
   }
   }
-  function saveResult() {
+ function saveResult() {
   const result = {
     name: currentStudentName,
     class: document.getElementById("classSelect").value,
     subject: document.getElementById("subjectSelect").value,
     term: document.getElementById("termSelect").value,
-    timeTaken: document.getElementById("timer").textContent.replace("Time Remaining: ", "")
+    timeTaken: calculateTimeTaken()
   };
-    function calculateTimeTaken() {
-  const timeText = document.getElementById("timer").textContent;
-  if (timeText.includes("Time's Up")) return "0 mins";
-  const match = timeText.match(/(\d+):(\d+)/);
-  if (!match) return "N/A";
-  const mins = parseInt(match[1]);
-  const secs = parseInt(match[2]);
-  return `${mins} mins ${secs} secs`;
-    }
+
 
   // Read existing saved results or create new array
   const results = JSON.parse(localStorage.getItem("quizResults") || "[]");
@@ -393,6 +379,5 @@ function downloadResults() {
   <button onclick="clearResults()">🗑️ Clear Results</button>
   <div id="savedResults" style="margin-top: 15px; text-align: left;"></div>
 </div>
-  <button onclick="clearResults()">🗑️ Clear Results</button>
 </body>
 </html>
