@@ -142,6 +142,7 @@
   <h3>Good luck, <span id="displayName"></span>!</h3>
   <p id="messageArea"></p>
   <iframe id="quizFrame" src=""></iframe>
+  <button id="submitEarlyBtn" onclick="submitEarly()">✅ I Have Submitted</button>
   <button id="goBackBtn" style="display: none;">⏪ Go Back</button>
 </div>
 
@@ -269,20 +270,24 @@ function startTimer(minutes) {
     const secs = timeLeft % 60;
     timerEl.textContent = `Time Remaining: ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
 
-    if (timeLeft <= 15 && timeLeft > 0) timerEl.classList.add("warning");
-
+    if (timeLeft <= 15 && timeLeft > 0) {timerEl.classList.add("warning");
+  }
     if (timeLeft <= 0) {
       clearInterval(countdownInterval);
       timerEl.textContent = "Time's Up!";
       timerEl.classList.remove("warning");
       timerEl.classList.add("timeup");
       endQuiz();
-    }
-
+  }
+ 
     timeLeft--;
   }, 1000);
 }
 
+function submitEarly() {
+  clearInterval(countdownInterval); // stop timer
+  endQuiz(); // take to Time’s Up page
+  }
 function endQuiz() {
   document.getElementById("quizPage").style.display = "none";
   document.getElementById("timesUpPage").style.display = "block";
@@ -292,6 +297,19 @@ function restartQuiz() {
   location.reload();
 }
 </script>
-
+  
+<!-- 📊 Results Viewing Area -->
+<div class="container" style="margin-top:40px;">
+  <h2>📘 Quiz Results</h2>
+  <button onclick="showSavedResults()">📊 View All Results</button>
+  <button onclick="downloadResults()">📥 Download Results</button>
+  <div id="savedResults" style="margin-top: 15px; text-align: left;"></div>
+</div>
+<!-- 📊 Results Viewing Area -->
+<div class="container" style="margin-top:40px;">
+  <h2>Results Area</h2>
+  <button onclick="showSavedResults()">📊 View My Quiz Results</button>
+  <div id="savedResults" style="margin-top: 15px;"></div>
+</div>  
 </body>
 </html>
