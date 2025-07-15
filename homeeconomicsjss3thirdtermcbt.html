@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple CBT Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 20px;
+      background: #f7f9fc;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
+    .question {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      background: #007bff;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 25px;
+      padding: 15px;
+      background: #e2f0d9;
+      border: 1px solid #8bc34a;
+      border-radius: 5px;
+      display: none;
+      text-align: center;
+      font-weight: bold;
+      color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simple CBT Test</h1>
+
+  <label for="studentName">Enter your name:</label>
+  <input type="text" id="studentName" placeholder="Your full name" />
+
+    <form id="cbtForm">
+  <div class="question">
+    <p>1. Which method of preserving food involves removing moisture?</p>
+    <label><input type="radio" name="q1" value="A"> Canning</label>
+    <label><input type="radio" name="q1" value="B"> Drying</label>
+    <label><input type="radio" name="q1" value="C"> Salting</label>
+    <label><input type="radio" name="q1" value="D"> Freezing</label>
+  </div>  <div class="question">
+  
+    <p>2. Which of these is a chemical method of food preservation?</p>
+    <label><input type="radio" name="q2" value="A"> Sun drying</label>
+    <label><input type="radio" name="q2" value="B"> Refrigeration</label>
+    <label><input type="radio" name="q2" value="C"> Smoking</label>
+    <label><input type="radio" name="q2" value="D"> Using preservatives</label>
+  </div>  <div class="question">
+  
+    <p>3. What is the main purpose of food preservation?</p>
+    <label><input type="radio" name="q3" value="A"> To make food expensive</label>
+    <label><input type="radio" name="q3" value="B"> To spoil food</label>
+    <label><input type="radio" name="q3" value="C"> To prolong shelf life</label>
+    <label><input type="radio" name="q3" value="D"> To beautify food</label>
+  </div>
+  
+  <div class="question">
+    <p>4. Which of the following is a method of food preservation?</p>
+    <label><input type="radio" name="q4" value="A"> Painting</label>
+    <label><input type="radio" name="q4" value="B"> Steaming</label>
+    <label><input type="radio" name="q4" value="C"> Drying</label>
+    <label><input type="radio" name="q4" value="D"> Boiling water</label>
+  </div>
+
+  <div class="question">
+    <p>5. The family is best described as:</p>
+    <label><input type="radio" name="q5" value="A"> A group of teachers</label>
+    <label><input type="radio" name="q5" value="B"> People living apart</label>
+    <label><input type="radio" name="q5" value="C"> A group of related people living together</label>
+    <label><input type="radio" name="q5" value="D"> Students in a class</label>
+  </div>
+
+  <div class="question">
+    <p>6. Which of these is NOT a role of family members?</p>
+    <label><input type="radio" name="q6" value="A"> Providing support</label>
+    <label><input type="radio" name="q6" value="B"> Fighting regularly</label>
+    <label><input type="radio" name="q6" value="C"> Teaching values</label>
+    <label><input type="radio" name="q6" value="D"> Caring for each other</label>
+  </div>
+
+  <div class="question">
+    <p>7. Balanced diet means:</p>
+    <label><input type="radio" name="q7" value="A"> Eating only fruits</label>
+    <label><input type="radio" name="q7" value="B"> Eating one type of food</label>
+    <label><input type="radio" name="q7" value="C"> Eating all classes of food in right proportion</label>
+    <label><input type="radio" name="q7" value="D"> Eating too much food</label>
+  </div>
+
+  <div class="question">
+    <p>8. One example of a protective food is:</p>
+    <label><input type="radio" name="q8" value="A"> Yam</label>
+    <label><input type="radio" name="q8" value="B"> Beans</label>
+    <label><input type="radio" name="q8" value="C"> Carrot</label>
+    <label><input type="radio" name="q8" value="D"> Rice</label>
+  </div>
+
+  <div class="question">
+    <p>9. Which of the following is an example of protein food?</p>
+    <label><input type="radio" name="q9" value="A"> Bread</label>
+    <label><input type="radio" name="q9" value="B"> Groundnut</label>
+    <label><input type="radio" name="q9" value="C"> Sugar</label>
+    <label><input type="radio" name="q9" value="D"> Plantain</label>
+  </div>
+
+  <div class="question">
+    <p>10. Which of these helps in building the body?</p>
+    <label><input type="radio" name="q10" value="A"> Fat</label>
+    <label><input type="radio" name="q10" value="B"> Protein</label>
+    <label><input type="radio" name="q10" value="C"> Vitamin</label>
+    <label><input type="radio" name="q10" value="D"> Mineral</label>
+  </div>
+  
+  <div class="question">
+    <p>11. Which vitamin is mainly found in citrus fruits?</p>
+    <label><input type="radio" name="q11" value="A"> Vitamin A</label>
+    <label><input type="radio" name="q11" value="B"> Vitamin B</label>
+    <label><input type="radio" name="q11" value="C"> Vitamin C</label>
+    <label><input type="radio" name="q11" value="D"> Vitamin D</label>
+  </div>
+
+  <div class="question">
+    <p>12. The main function of carbohydrates is to:</p>
+    <label><input type="radio" name="q12" value="A"> Build the body</label>
+    <label><input type="radio" name="q12" value="B"> Provide energy</label>
+    <label><input type="radio" name="q12" value="C"> Help digestion</label>
+    <label><input type="radio" name="q12" value="D"> Protect the body</label>
+  </div>
+
+  <div class="question">
+    <p>13. Food nutrients are:</p>
+    <label><input type="radio" name="q13" value="A"> Only carbohydrates</label>
+    <label><input type="radio" name="q13" value="B"> Vitamins and minerals only</label>
+    <label><input type="radio" name="q13" value="C"> All food components needed by the body</label>
+    <label><input type="radio" name="q13" value="D"> Drugs and supplements</label>
+  </div>
+
+  <div class="question">
+    <p>14. Which of these is not a method of cooking?</p>
+    <label><input type="radio" name="q14" value="A"> Frying</label>
+    <label><input type="radio" name="q14" value="B"> Steaming</label>
+    <label><input type="radio" name="q14" value="C"> Painting</label>
+    <label><input type="radio" name="q14" value="D"> Roasting</label>
+  </div>
+
+  <div class="question">
+    <p>15. Which of these is a dry method of cooking?</p>
+    <label><input type="radio" name="q15" value="A"> Boiling</label>
+    <label><input type="radio" name="q15" value="B"> Steaming</label>
+    <label><input type="radio" name="q15" value="C"> Frying</label>
+    <label><input type="radio" name="q15" value="D"> Grilling</label>
+  </div>
+
+  <div class="question">
+  <p>16. Proper table manners include:</p>
+  <label><input type="radio" name="q16" value="A"> Talking loudly</label>
+  <label><input type="radio" name="q16" value="B"> Eating with mouth open</label>
+  <label><input type="radio" name="q16" value="C"> Washing hands before eating</label>
+  <label><input type="radio" name="q16" value="D"> Playing while eating</label>
+</div>
+
+  <div class="question">
+    <p>17. Which of these is used in cleaning the kitchen?</p>
+    <label><input type="radio" name="q17" value="A"> Broom</label>
+    <label><input type="radio" name="q17" value="B"> Detergent</label>
+    <label><input type="radio" name="q17" value="C"> Paint</label>
+    <label><input type="radio" name="q17" value="D"> Oil</label>
+  </div>
+
+  <div class="question">
+    <p>18. A clean environment helps to:</p>
+    <label><input type="radio" name="q18" value="A"> Cause diseases</label>
+    <label><input type="radio" name="q18" value="B"> Attract flies</label>
+    <label><input type="radio" name="q18" value="C"> Promote good health</label>
+    <label><input type="radio" name="q18" value="D"> Breed mosquitoes</label>
+  </div>
+
+  <div class="question">
+    <p>19. Proper waste disposal helps to:</p>
+    <label><input type="radio" name="q19" value="A"> Pollute the environment</label>
+    <label><input type="radio" name="q19" value="B"> Cause flood</label>
+    <label><input type="radio" name="q19" value="C"> Keep surroundings clean</label>
+    <label><input type="radio" name="q19" value="D"> Block drainage</label>
+  </div>
+
+  <div class="question">
+    <p>20. Which of these is a way to prevent kitchen accidents?</p>
+    <label><input type="radio" name="q20" value="A"> Running in the kitchen</label>
+    <label><input type="radio" name="q20" value="B"> Keeping the floor dry</label>
+    <label><input type="radio" name="q20" value="C"> Leaving knives around</label>
+    <label><input type="radio" name="q20" value="D"> Playing with fire</label>
+  </div>
+  
+  <div class="question">
+    <p>21. Which of these is a personal hygiene practice?</p>
+    <label><input type="radio" name="q21" value="A"> Sharing towels</label>
+    <label><input type="radio" name="q21" value="B"> Bathing regularly</label>
+    <label><input type="radio" name="q21" value="C"> Wearing dirty clothes</label>
+    <label><input type="radio" name="q21" value="D"> Walking barefoot</label>
+  </div>
+
+  <div class="question">
+    <p>22. Which of these is a cause of body odor?</p>
+    <label><input type="radio" name="q22" value="A"> Regular bathing</label>
+    <label><input type="radio" name="q22" value="B"> Using deodorant</label>
+    <label><input type="radio" name="q22" value="C"> Sweating without cleaning</label>
+    <label><input type="radio" name="q22" value="D"> Wearing clean clothes</label>
+  </div>
+
+  <div class="question">
+    <p>23. Which of these is a source of protein?</p>
+    <label><input type="radio" name="q23" value="A"> Yam</label>
+    <label><input type="radio" name="q23" value="B"> Rice</label>
+    <label><input type="radio" name="q23" value="C"> Beans</label>
+    <label><input type="radio" name="q23" value="D"> Sugar</label>
+  </div>
+
+  <div class="question">
+    <p>24. Which of the following is used in sewing?</p>
+    <label><input type="radio" name="q24" value="A"> Blender</label>
+    <label><input type="radio" name="q24" value="B"> Sewing machine</label>
+    <label><input type="radio" name="q24" value="C"> Gas cooker</label>
+    <label><input type="radio" name="q24" value="D"> Refrigerator</label>
+  </div>
+
+  <div class="question">
+    <p>25. Which of these is suitable for washing clothes?</p>
+    <label><input type="radio" name="q25" value="A"> Water only</label>
+    <label><input type="radio" name="q25" value="B"> Salt</label>
+    <label><input type="radio" name="q25" value="C"> Detergent</label>
+    <label><input type="radio" name="q25" value="D"> Oil</label>
+  </div>
+
+  <div class="question">
+    <p>26. What do you call a group of people living together?</p>
+    <label><input type="radio" name="q26" value="A"> Class</label>
+    <label><input type="radio" name="q26" value="B"> Group</label>
+    <label><input type="radio" name="q26" value="C"> Family</label>
+    <label><input type="radio" name="q26" value="D"> Office</label>
+  </div>
+
+  <div class="question">
+    <p>27. A child who has lost both parents is called:</p>
+    <label><input type="radio" name="q27" value="A"> Stranger</label>
+    <label><input type="radio" name="q27" value="B"> Orphan</label>
+    <label><input type="radio" name="q27" value="C"> Ward</label>
+    <label><input type="radio" name="q27" value="D"> Cousin</label>
+  </div>
+
+  <div class="question">
+    <p>28. Who is responsible for decision making in a family?</p>
+    <label><input type="radio" name="q28" value="A"> Visitors</label>
+    <label><input type="radio" name="q28" value="B"> Children only</label>
+    <label><input type="radio" name="q28" value="C"> Father and mother</label>
+    <label><input type="radio" name="q28" value="D"> Neighbours</label>
+  </div>
+
+  <div class="question">
+    <p>29. What is the importance of clothing?</p>
+    <label><input type="radio" name="q29" value="A"> For punishment</label>
+    <label><input type="radio" name="q29" value="B"> For exposure</label>
+    <label><input type="radio" name="q29" value="C"> For decoration only</label>
+    <label><input type="radio" name="q29" value="D"> For protection and identity</label>
+  </div>
+
+  <div class="question">
+    <p>30. Which of the following is a natural fibre?</p>
+    <label><input type="radio" name="q30" value="A"> Nylon</label>
+    <label><input type="radio" name="q30" value="B"> Cotton</label>
+    <label><input type="radio" name="q30" value="C"> Polyester</label>
+    <label><input type="radio" name="q30" value="D"> Rayon</label>
+  </div>
+  
+  <div class="question">
+    <p>31. Which of the following is a function of the sewing machine?</p>
+    <label><input type="radio" name="q31" value="A"> Cooking food</label>
+    <label><input type="radio" name="q31" value="B"> Preserving food</label>
+    <label><input type="radio" name="q31" value="C"> Joining fabrics</label>
+    <label><input type="radio" name="q31" value="D"> Washing clothes</label>
+  </div>
+
+  <div class="question">
+    <p>32. Which of these is suitable for storing perishable food?</p>
+    <label><input type="radio" name="q32" value="A"> Cupboard</label>
+    <label><input type="radio" name="q32" value="B"> Freezer</label>
+    <label><input type="radio" name="q32" value="C"> Basket</label>
+    <label><input type="radio" name="q32" value="D"> Tray</label>
+  </div>
+
+  <div class="question">
+    <p>33. What is the first step in hand sewing?</p>
+    <label><input type="radio" name="q33" value="A"> Knotting the thread</label>
+    <label><input type="radio" name="q33" value="B"> Ironing the cloth</label>
+    <label><input type="radio" name="q33" value="C"> Cutting the fabric</label>
+    <label><input type="radio" name="q33" value="D"> Wearing gloves</label>
+  </div>
+
+  <div class="question">
+    <p>34. Which vitamin is mainly found in citrus fruits?</p>
+    <label><input type="radio" name="q34" value="A"> Vitamin A</label>
+    <label><input type="radio" name="q34" value="B"> Vitamin B</label>
+    <label><input type="radio" name="q34" value="C"> Vitamin C</label>
+    <label><input type="radio" name="q34" value="D"> Vitamin D</label>
+  </div>
+
+  <div class="question">
+    <p>35. Boiling, frying and baking are methods of:</p>
+    <label><input type="radio" name="q35" value="A"> Sewing</label>
+    <label><input type="radio" name="q35" value="B"> Cooking</label>
+    <label><input type="radio" name="q35" value="C"> Washing</label>
+    <label><input type="radio" name="q35" value="D"> Freezing</label>
+  </div>
+
+  <div class="question">
+    <p>36. What is the first thing to do before preparing food?</p>
+    <label><input type="radio" name="q36" value="A"> Eat snacks</label>
+    <label><input type="radio" name="q36" value="B"> Wash hands</label>
+    <label><input type="radio" name="q36" value="C"> Put on apron</label>
+    <label><input type="radio" name="q36" value="D"> Wear gloves</label>
+  </div>
+
+  <div class="question">
+    <p>37. Which of these is not a reason for budgeting?</p>
+    <label><input type="radio" name="q37" value="A"> To manage money</label>
+    <label><input type="radio" name="q37" value="B"> To overspend</label>
+    <label><input type="radio" name="q37" value="C"> To plan expenses</label>
+    <label><input type="radio" name="q37" value="D"> To avoid waste</label>
+  </div>
+
+  <div class="question">
+    <p>38. What is the use of an apron in the kitchen?</p>
+    <label><input type="radio" name="q38" value="A"> For fashion</label>
+    <label><input type="radio" name="q38" value="B"> To clean dishes</label>
+    <label><input type="radio" name="q38" value="C"> To protect clothes</label>
+    <label><input type="radio" name="q38" value="D"> To wipe tables</label>
+  </div>
+
+  <div class="question">
+    <p>39. One importance of proper table setting is:</p>
+    <label><input type="radio" name="q39" value="A"> To delay eating</label>
+    <label><input type="radio" name="q39" value="B"> To impress friends</label>
+    <label><input type="radio" name="q39" value="C"> To make eating enjoyable</label>
+    <label><input type="radio" name="q39" value="D"> To waste time</label>
+  </div>
+
+  <div class="question">
+    <p>40. Which of the following is not a good table manner?</p>
+    <label><input type="radio" name="q40" value="A"> Chewing with mouth closed</label>
+    <label><input type="radio" name="q40" value="B"> Talking while eating</label>
+    <label><input type="radio" name="q40" value="C"> Using cutlery properly</label>
+    <label><input type="radio" name="q40" value="D"> Saying excuse me</label>
+  </div>
+
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const correctAnswers = {
+  q1: "B",
+    q2: "C",
+    q3: "C",
+    q4: "A",
+    q5: "D",
+    q6: "A",
+    q7: "D",
+    q8: "C",
+    q9: "A",
+    q10: "D",
+    q11: "C",
+    q12: "B",
+    q13: "C",
+    q14: "B",
+    q15: "C",
+    q16: "C",
+    q17: "A",
+    q18: "C",
+    q19: "B",
+    q20: "B",
+    q21: "C",
+    q22: "A",
+    q23: "A",
+    q24: "B",
+    q25: "B",
+    q26: "C",
+    q27: "D",
+    q28: "B",
+    q29: "C",
+    q30: "B",
+    q31: "C",
+    q32: "B",
+    q33: "A",
+    q34: "C",
+    q35: "B",
+    q36: "B",
+    q37: "B",
+    q38: "C",
+    q39: "C",
+    q40: "B"
+
+     };
+
+    const form = document.getElementById('cbtForm');
+    const resultDiv = document.getElementById('result');
+    const studentNameInput = document.getElementById('studentName');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const studentName = studentNameInput.value.trim();
+      if (!studentName) {
+        alert('Please enter your name before submitting.');
+        studentNameInput.focus();
+        return;
+      }
+
+      let score = 0;
+      let total = Object.keys(correctAnswers).length;
+
+      for (const [question, correct] of Object.entries(correctAnswers)) {
+        const selected = form.elements[question].value;
+        if (selected === correct) {
+          score++;
+        }
+      }
+
+      const percentage = ((score / total) * 100).toFixed(2);
+
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = `${studentName}, your score is ${score} out of ${total} (${percentage}%).`;
+
+      // Optionally disable form after submission
+      form.querySelector('button').disabled = true;
+      form.querySelectorAll('input').forEach(input => input.disabled = true);
+      studentNameInput.disabled = true;
+    });
+  </script>
+</body>
+</html>
