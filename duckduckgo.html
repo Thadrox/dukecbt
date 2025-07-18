@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple CBT Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 0 20px;
+      background: #f7f9fc;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
+    .question {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      background: #007bff;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 25px;
+      padding: 15px;
+      background: #e2f0d9;
+      border: 1px solid #8bc34a;
+      border-radius: 5px;
+      display: none;
+      text-align: center;
+      font-weight: bold;
+      color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simple CBT Test</h1>
+
+  <label for="studentName">Enter your name:</label>
+  <input type="text" id="studentName" placeholder="Your full name" />
+
+    <form id="cbtForm">
+  <div class="question">
+    <p>1. Which farming system involves moving from one farm to another after some years?</p>
+    <label><input type="radio" name="q1" value="A" /> Mechanized farming</label>
+    <label><input type="radio" name="q1" value="B" /> Crop rotation</label>
+    <label><input type="radio" name="q1" value="C" /> Shifting cultivation</label>
+    <label><input type="radio" name="q1" value="D" /> Mixed farming</label>
+  </div>
+
+  <div class="question">
+    <p>2. Which of these is not an agricultural tool?</p>
+    <label><input type="radio" name="q2" value="A" /> Hoe</label>
+    <label><input type="radio" name="q2" value="B" /> Broom</label>
+    <label><input type="radio" name="q2" value="C" /> Cutlass</label>
+    <label><input type="radio" name="q2" value="D" /> Rake</label>
+  </div>
+
+  <div class="question">
+    <p>3. The ability of soil to hold water is called ____</p>
+    <label><input type="radio" name="q3" value="A" /> Capillarity</label>
+    <label><input type="radio" name="q3" value="B" /> Porosity</label>
+    <label><input type="radio" name="q3" value="C" /> Permeability</label>
+    <label><input type="radio" name="q3" value="D" /> Water retention</label>
+  </div>
+
+  <div class="question">
+    <p>4. Which class of soil is best for farming?</p>
+    <label><input type="radio" name="q4" value="A" /> Clay</label>
+    <label><input type="radio" name="q4" value="B" /> Sand</label>
+    <label><input type="radio" name="q4" value="C" /> Loam</label>
+    <label><input type="radio" name="q4" value="D" /> Gravel</label>
+  </div>
+
+  <div class="question">
+    <p>5. The branch of agriculture that deals with raising animals is called:</p>
+    <label><input type="radio" name="q5" value="A" /> Crop science</label>
+    <label><input type="radio" name="q5" value="B" /> Animal husbandry</label>
+    <label><input type="radio" name="q5" value="C" /> Soil science</label>
+    <label><input type="radio" name="q5" value="D" /> Agricultural economics</label>
+  </div>
+
+  <div class="question">
+    <p>6. The process of planting the same crop on a piece of land year after year is called:</p>
+    <label><input type="radio" name="q6" value="A" /> Crop rotation</label>
+    <label><input type="radio" name="q6" value="B" /> Mono-cropping</label>
+    <label><input type="radio" name="q6" value="C" /> Mixed farming</label>
+    <label><input type="radio" name="q6" value="D" /> Irrigation</label>
+  </div>
+
+  <div class="question">
+    <p>7. Which of the following tools is used for harvesting?</p>
+    <label><input type="radio" name="q7" value="A" /> Harrow</label>
+    <label><input type="radio" name="q7" value="B" /> Hoe</label>
+    <label><input type="radio" name="q7" value="C" /> Sickle</label>
+    <label><input type="radio" name="q7" value="D" /> Pick axe</label>
+  </div>
+
+  <div class="question">
+    <p>8. An example of a ruminant animal is:</p>
+    <label><input type="radio" name="q8" value="A" /> Pig</label>
+    <label><input type="radio" name="q8" value="B" /> Rabbit</label>
+    <label><input type="radio" name="q8" value="C" /> Cow</label>
+    <label><input type="radio" name="q8" value="D" /> Dog</label>
+  </div>
+
+  <div class="question">
+    <p>9. Which nutrient helps plants to grow healthy leaves?</p>
+    <label><input type="radio" name="q9" value="A" /> Nitrogen</label>
+    <label><input type="radio" name="q9" value="B" /> Potassium</label>
+    <label><input type="radio" name="q9" value="C" /> Phosphorus</label>
+    <label><input type="radio" name="q9" value="D" /> Calcium</label>
+  </div>
+
+  <div class="question">
+    <p>10. One major cause of soil erosion is:</p>
+    <label><input type="radio" name="q10" value="A" /> Wind</label>
+    <label><input type="radio" name="q10" value="B" /> Worms</label>
+    <label><input type="radio" name="q10" value="C" /> Seeds</label>
+    <label><input type="radio" name="q10" value="D" /> Raincoats</label>
+  </div>
+
+  <div class="question">
+    <p>11. Which of these is not a cereal crop?</p>
+    <label><input type="radio" name="q11" value="A" /> Maize</label>
+    <label><input type="radio" name="q11" value="B" /> Rice</label>
+    <label><input type="radio" name="q11" value="C" /> Beans</label>
+    <label><input type="radio" name="q11" value="D" /> Millet</label>
+  </div>
+
+  <div class="question">
+    <p>12. Mulching helps to:</p>
+    <label><input type="radio" name="q12" value="A" /> Increase weeds</label>
+    <label><input type="radio" name="q12" value="B" /> Reduce pests</label>
+    <label><input type="radio" name="q12" value="C" /> Conserve soil moisture</label>
+    <label><input type="radio" name="q12" value="D" /> Prevent crop growth</label>
+  </div>
+
+  <div class="question">
+    <p>13. The cutting down of trees without replacing them leads to:</p>
+    <label><input type="radio" name="q13" value="A" /> Reforestation</label>
+    <label><input type="radio" name="q13" value="B" /> Afforestation</label>
+    <label><input type="radio" name="q13" value="C" /> Deforestation</label>
+    <label><input type="radio" name="q13" value="D" /> Forestation</label>
+  </div>
+
+  <div class="question">
+    <p>14. A farm input used to kill weeds is called:</p>
+    <label><input type="radio" name="q14" value="A" /> Fertilizer</label>
+    <label><input type="radio" name="q14" value="B" /> Pesticide</label>
+    <label><input type="radio" name="q14" value="C" /> Herbicide</label>
+    <label><input type="radio" name="q14" value="D" /> Fungicide</label>
+  </div>
+
+  <div class="question">
+    <p>15. Which of the following is a legume?</p>
+    <label><input type="radio" name="q15" value="A" /> Wheat</label>
+    <label><input type="radio" name="q15" value="B" /> Cowpea</label>
+    <label><input type="radio" name="q15" value="C" /> Cassava</label>
+    <label><input type="radio" name="q15" value="D" /> Yam</label>
+  </div>
+
+  <div class="question">
+    <p>16. What is the function of phosphorus in plants?</p>
+    <label><input type="radio" name="q16" value="A" /> Root development</label>
+    <label><input type="radio" name="q16" value="B" /> Leaf production</label>
+    <label><input type="radio" name="q16" value="C" /> Flower production</label>
+    <label><input type="radio" name="q16" value="D" /> Pest resistance</label>
+  </div>
+
+  <div class="question">
+    <p>17. Which farming method uses machines extensively?</p>
+    <label><input type="radio" name="q17" value="A" /> Nomadic farming</label>
+    <label><input type="radio" name="q17" value="B" /> Mechanized farming</label>
+    <label><input type="radio" name="q17" value="C" /> Subsistence farming</label>
+    <label><input type="radio" name="q17" value="D" /> Shifting cultivation</label>
+  </div>
+
+  <div class="question">
+    <p>18. Organic manure is made from:</p>
+    <label><input type="radio" name="q18" value="A" /> Chemicals</label>
+    <label><input type="radio" name="q18" value="B" /> Ash</label>
+    <label><input type="radio" name="q18" value="C" /> Animal and plant waste</label>
+    <label><input type="radio" name="q18" value="D" /> Plastic</label>
+  </div>
+
+  <div class="question">
+    <p>19. The space left between crops when planting is called:</p>
+    <label><input type="radio" name="q19" value="A" /> Mulch</label>
+    <label><input type="radio" name="q19" value="B" /> Interval</label>
+    <label><input type="radio" name="q19" value="C" /> Spacing</label>
+    <label><input type="radio" name="q19" value="D" /> Cropping</label>
+  </div>
+
+  <div class="question">
+    <p>20. Which is an example of a tuber crop?</p>
+    <label><input type="radio" name="q20" value="A" /> Groundnut</label>
+    <label><input type="radio" name="q20" value="B" /> Yam</label>
+    <label><input type="radio" name="q20" value="C" /> Maize</label>
+    <label><input type="radio" name="q20" value="D" /> Beans</label>
+  </div>
+  
+    <p>21. Poultry refers to:</p>
+    <label><input type="radio" name="q21" value="A" /> Only goats</label>
+    <label><input type="radio" name="q21" value="B" /> Only sheep</label>
+    <label><input type="radio" name="q21" value="C" /> Domestic birds</label>
+    <label><input type="radio" name="q21" value="D" /> All farm animals</label>
+  </div>
+
+  <div class="question">
+    <p>22. The young one of a goat is called:</p>
+    <label><input type="radio" name="q22" value="A" /> Calf</label>
+    <label><input type="radio" name="q22" value="B" /> Kid</label>
+    <label><input type="radio" name="q22" value="C" /> Lamb</label>
+    <label><input type="radio" name="q22" value="D" /> Pup</label>
+  </div>
+
+  <div class="question">
+    <p>23. Animals that chew the cud are called:</p>
+    <label><input type="radio" name="q23" value="A" /> Rodents</label>
+    <label><input type="radio" name="q23" value="B" /> Ruminants</label>
+    <label><input type="radio" name="q23" value="C" /> Omnivores</label>
+    <label><input type="radio" name="q23" value="D" /> Mammals</label>
+  </div>
+
+  <div class="question">
+    <p>24. Goats are reared mainly for:</p>
+    <label><input type="radio" name="q24" value="A" /> Speed</label>
+    <label><input type="radio" name="q24" value="B" /> Hair</label>
+    <label><input type="radio" name="q24" value="C" /> Milk and meat</label>
+    <label><input type="radio" name="q24" value="D" /> Ploughing</label>
+  </div>
+
+  <div class="question">
+    <p>25. Which disease affects poultry birds?</p>
+    <label><input type="radio" name="q25" value="A" /> Ringworm</label>
+    <label><input type="radio" name="q25" value="B" /> Rinderpest</label>
+    <label><input type="radio" name="q25" value="C" /> Newcastle disease</label>
+    <label><input type="radio" name="q25" value="D" /> Anthrax</label>
+  </div>
+
+  <div class="question">
+    <p>26. Deworming helps to:</p>
+    <label><input type="radio" name="q26" value="A" /> Increase hair growth</label>
+    <label><input type="radio" name="q26" value="B" /> Kill internal parasites</label>
+    <label><input type="radio" name="q26" value="C" /> Change animal color</label>
+    <label><input type="radio" name="q26" value="D" /> Make animals bark</label>
+  </div>
+
+  <div class="question">
+    <p>27. Rabbits belong to which class of animals?</p>
+    <label><input type="radio" name="q27" value="A" /> Birds</label>
+    <label><input type="radio" name="q27" value="B" /> Rodents</label>
+    <label><input type="radio" name="q27" value="C" /> Ruminants</label>
+    <label><input type="radio" name="q27" value="D" /> Reptiles</label>
+  </div>
+
+  <div class="question">
+    <p>28. Pigs are known for being:</p>
+    <label><input type="radio" name="q28" value="A" /> Clean</label>
+    <label><input type="radio" name="q28" value="B" /> Omnivorous</label>
+    <label><input type="radio" name="q28" value="C" /> Herbivorous</label>
+    <label><input type="radio" name="q28" value="D" /> Carnivorous</label>
+  </div>
+
+  <div class="question">
+    <p>29. What is the shelter of a poultry bird called?</p>
+    <label><input type="radio" name="q29" value="A" /> Stable</label>
+    <label><input type="radio" name="q29" value="B" /> Pen</label>
+    <label><input type="radio" name="q29" value="C" /> Sty</label>
+    <label><input type="radio" name="q29" value="D" /> Coop</label>
+  </div>
+
+  <div class="question">
+    <p>30. The process of selecting the best animal for breeding is called:</p>
+    <label><input type="radio" name="q30" value="A" /> Sorting</label>
+    <label><input type="radio" name="q30" value="B" /> Mating</label>
+    <label><input type="radio" name="q30" value="C" /> Culling</label>
+    <label><input type="radio" name="q30" value="D" /> Selection</label>
+  </div>
+
+  <div class="question">
+    <p>31. A hoe is used for:</p>
+    <label><input type="radio" name="q31" value="A" /> Harvesting grains</label>
+    <label><input type="radio" name="q31" value="B" /> Tilling soil</label>
+    <label><input type="radio" name="q31" value="C" /> Watering plants</label>
+    <label><input type="radio" name="q31" value="D" /> Pruning trees</label>
+  </div>
+
+  <div class="question">
+    <p>32. A wheelbarrow is mainly used to:</p>
+    <label><input type="radio" name="q32" value="A" /> Spray crops</label>
+    <label><input type="radio" name="q32" value="B" /> Weed the farm</label>
+    <label><input type="radio" name="q32" value="C" /> Carry materials</label>
+    <label><input type="radio" name="q32" value="D" /> Cut trees</label>
+  </div>
+
+  <div class="question">
+    <p>33. The tool used to prune trees is:</p>
+    <label><input type="radio" name="q33" value="A" /> Harrow</label>
+    <label><input type="radio" name="q33" value="B" /> Matchet</label>
+    <label><input type="radio" name="q33" value="C" /> Hoe</label>
+    <label><input type="radio" name="q33" value="D" /> Sprayer</label>
+  </div>
+
+  <div class="question">
+    <p>34. Which tool is used for planting seeds directly?</p>
+    <label><input type="radio" name="q34" value="A" /> Watering can</label>
+    <label><input type="radio" name="q34" value="B" /> Seed planter</label>
+    <label><input type="radio" name="q34" value="C" /> Pick axe</label>
+    <label><input type="radio" name="q34" value="D" /> Tractor</label>
+  </div>
+
+  <div class="question">
+    <p>35. Which of these tools requires sharpening regularly?</p>
+    <label><input type="radio" name="q35" value="A" /> Watering can</label>
+    <label><input type="radio" name="q35" value="B" /> Cutlass</label>
+    <label><input type="radio" name="q35" value="C" /> Rake</label>
+    <label><input type="radio" name="q35" value="D" /> Basket</label>
+  </div>
+
+  <div class="question">
+    <p>36. Safety when using farm tools includes:</p>
+    <label><input type="radio" name="q36" value="A" /> Wearing slippers</label>
+    <label><input type="radio" name="q36" value="B" /> Running on farm</label>
+    <label><input type="radio" name="q36" value="C" /> Using broken tools</label>
+    <label><input type="radio" name="q36" value="D" /> Wearing gloves</label>
+  </div>
+
+  <div class="question">
+    <p>37. The farm implement used for ploughing large farms is:</p>
+    <label><input type="radio" name="q37" value="A" /> Tractor</label>
+    <label><input type="radio" name="q37" value="B" /> Pick axe</label>
+    <label><input type="radio" name="q37" value="C" /> Harrow</label>
+    <label><input type="radio" name="q37" value="D" /> Shovel</label>
+  </div>
+
+  <div class="question">
+    <p>38. Which of the following is an indigenous farm tool?</p>
+    <label><input type="radio" name="q38" value="A" /> Harvester</label>
+    <label><input type="radio" name="q38" value="B" /> Tractor</label>
+    <label><input type="radio" name="q38" value="C" /> Cutlass</label>
+    <label><input type="radio" name="q38" value="D" /> Boom sprayer</label>
+  </div>
+
+  <div class="question">
+    <p>39. To remove weeds manually, you use a:</p>
+    <label><input type="radio" name="q39" value="A" /> Sickle</label>
+    <label><input type="radio" name="q39" value="B" /> Hoe</label>
+    <label><input type="radio" name="q39" value="C" /> Sprayer</label>
+    <label><input type="radio" name="q39" value="D" /> Spade</label>
+  </div>
+
+  <div class="question">
+  <p>40. An irrigation can is used to:</p>
+  <label><input type="radio" name="q40" value="A" /> Plant seeds</label>
+  <label><input type="radio" name="q40" value="B" /> Spray chemicals</label>
+  <label><input type="radio" name="q40" value="C" /> Water crops</label>
+  <label><input type="radio" name="q40" value="D" /> Harvest fruits</label>
+</div>
+
+    <p>41. Which of these is a method of irrigation?</p>
+    <label><input type="radio" name="q41" value="A" /> Drip irrigation</label>
+    <label><input type="radio" name="q41" value="B" /> Harvesting</label>
+    <label><input type="radio" name="q41" value="C" /> Ploughing</label>
+    <label><input type="radio" name="q41" value="D" /> Threshing</label>
+  </div>
+
+  <div class="question">
+    <p>42. The farm tool used for loosening soil is called:</p>
+    <label><input type="radio" name="q42" value="A" /> Rake</label>
+    <label><input type="radio" name="q42" value="B" /> Hoe</label>
+    <label><input type="radio" name="q42" value="C" /> Spade</label>
+    <label><input type="radio" name="q42" value="D" /> Cutlass</label>
+  </div>
+
+  <div class="question">
+    <p>43. Which of the following is not a farm crop?</p>
+    <label><input type="radio" name="q43" value="A" /> Maize</label>
+    <label><input type="radio" name="q43" value="B" /> Yam</label>
+    <label><input type="radio" name="q43" value="C" /> Fish</label>
+    <label><input type="radio" name="q43" value="D" /> Rice</label>
+  </div>
+
+  <div class="question">
+    <p>44. The process of gathering mature crops is called:</p>
+    <label><input type="radio" name="q44" value="A" /> Planting</label>
+    <label><input type="radio" name="q44" value="B" /> Harvesting</label>
+    <label><input type="radio" name="q44" value="C" /> Spraying</label>
+    <label><input type="radio" name="q44" value="D" /> Weeding</label>
+  </div>
+
+  <div class="question">
+    <p>45. Which crop is commonly used to make garri?</p>
+    <label><input type="radio" name="q45" value="A" /> Cassava</label>
+    <label><input type="radio" name="q45" value="B" /> Yam</label>
+    <label><input type="radio" name="q45" value="C" /> Maize</label>
+    <label><input type="radio" name="q45" value="D" /> Rice</label>
+  </div>
+
+  <div class="question">
+    <p>46. Which of the following is a leguminous crop?</p>
+    <label><input type="radio" name="q46" value="A" /> Maize</label>
+    <label><input type="radio" name="q46" value="B" /> Beans</label>
+    <label><input type="radio" name="q46" value="C" /> Cassava</label>
+    <label><input type="radio" name="q46" value="D" /> Millet</label>
+  </div>
+
+  <div class="question">
+    <p>47. Crop rotation helps to:</p>
+    <label><input type="radio" name="q47" value="A" /> Decrease soil fertility</label>
+    <label><input type="radio" name="q47" value="B" /> Improve soil fertility</label>
+    <label><input type="radio" name="q47" value="C" /> Increase pest attack</label>
+    <label><input type="radio" name="q47" value="D" /> Reduce crop yield</label>
+  </div>
+
+  <div class="question">
+    <p>48. Which of these is a cereal crop?</p>
+    <label><input type="radio" name="q48" value="A" /> Yam</label>
+    <label><input type="radio" name="q48" value="B" /> Rice</label>
+    <label><input type="radio" name="q48" value="C" /> Beans</label>
+    <label><input type="radio" name="q48" value="D" /> Cassava</label>
+  </div>
+
+  <div class="question">
+    <p>49. Which crop is affected by weevils in storage?</p>
+    <label><input type="radio" name="q49" value="A" /> Maize</label>
+    <label><input type="radio" name="q49" value="B" /> Yam</label>
+    <label><input type="radio" name="q49" value="C" /> Cassava</label>
+    <label><input type="radio" name="q49" value="D" /> Beans</label>
+  </div>
+
+  <div class="question">
+    <p>50. The chemical used to kill weeds is called:</p>
+    <label><input type="radio" name="q50" value="A" /> Insecticide</label>
+    <label><input type="radio" name="q50" value="B" /> Herbicide</label>
+    <label><input type="radio" name="q50" value="C" /> Fertilizer</label>
+    <label><input type="radio" name="q50" value="D" /> Pesticide</label>
+  </div>
+
+    <p>51. The process of removing unwanted plants from the farm is called:</p>
+    <label><input type="radio" name="q51" value="A" /> Harvesting</label>
+    <label><input type="radio" name="q51" value="B" /> Weeding</label>
+    <label><input type="radio" name="q51" value="C" /> Spraying</label>
+    <label><input type="radio" name="q51" value="D" /> Ploughing</label>
+  </div>
+
+  <div class="question">
+    <p>52. One of the disadvantages of bush burning is:</p>
+    <label><input type="radio" name="q52" value="A" /> It adds nutrients to soil</label>
+    <label><input type="radio" name="q52" value="B" /> It helps planting</label>
+    <label><input type="radio" name="q52" value="C" /> It destroys soil structure</label>
+    <label><input type="radio" name="q52" value="D" /> It reduces pest population</label>
+  </div>
+
+  <div class="question">
+    <p>53. Which of the following is a storage pest?</p>
+    <label><input type="radio" name="q53" value="A" /> Yam beetle</label>
+    <label><input type="radio" name="q53" value="B" /> Grasshopper</label>
+    <label><input type="radio" name="q53" value="C" /> Weevil</label>
+    <label><input type="radio" name="q53" value="D" /> Caterpillar</label>
+  </div>
+
+  <div class="question">
+    <p>54. Which farming system involves both crop production and animal rearing on the same land?</p>
+    <label><input type="radio" name="q54" value="A" /> Shifting cultivation</label>
+    <label><input type="radio" name="q54" value="B" /> Crop rotation</label>
+    <label><input type="radio" name="q54" value="C" /> Mixed farming</label>
+    <label><input type="radio" name="q54" value="D" /> Nomadic farming</label>
+  </div>
+
+  <div class="question">
+    <p>55. Which farming system is common among Fulani herdsmen in Nigeria?</p>
+    <label><input type="radio" name="q55" value="A" /> Pastoral farming</label>
+    <label><input type="radio" name="q55" value="B" /> Nomadic farming</label>
+    <label><input type="radio" name="q55" value="C" /> Mechanized farming</label>
+    <label><input type="radio" name="q55" value="D" /> Organic farming</label>
+  </div>
+
+  <div class="question">
+    <p>56. The practice of keeping animals in a semi-free range system is called:</p>
+    <label><input type="radio" name="q56" value="A" /> Zero grazing</label>
+    <label><input type="radio" name="q56" value="B" /> Semi-intensive system</label>
+    <label><input type="radio" name="q56" value="C" /> Nomadism</label>
+    <label><input type="radio" name="q56" value="D" /> Ranching</label>
+  </div>
+
+  <div class="question">
+    <p>57. A disease that affects farm animals is:</p>
+    <label><input type="radio" name="q57" value="A" /> Malaria</label>
+    <label><input type="radio" name="q57" value="B" /> Diarrhea</label>
+    <label><input type="radio" name="q57" value="C" /> Rinderpest</label>
+    <label><input type="radio" name="q57" value="D" /> Measles</label>
+  </div>
+
+  <div class="question">
+    <p>58. The farm structure used to store grains is called:</p>
+    <label><input type="radio" name="q58" value="A" /> Pen</label>
+    <label><input type="radio" name="q58" value="B" /> Silo</label>
+    <label><input type="radio" name="q58" value="C" /> Coop</label>
+    <label><input type="radio" name="q58" value="D" /> Sty</label>
+  </div>
+
+  <div class="question">
+    <p>59. One of the following is used for irrigation:</p>
+    <label><input type="radio" name="q59" value="A" /> Knife</label>
+    <label><input type="radio" name="q59" value="B" /> Matchet</label>
+    <label><input type="radio" name="q59" value="C" /> Sprinkler</label>
+    <label><input type="radio" name="q59" value="D" /> Brush</label>
+  </div>
+
+  <div class="question">
+    <p>60. Which farming method is practiced mainly for family consumption?</p>
+    <label><input type="radio" name="q60" value="A" /> Commercial farming</label>
+    <label><input type="radio" name="q60" value="B" /> Mechanized farming</label>
+    <label><input type="radio" name="q60" value="C" /> Subsistence farming</label>
+    <label><input type="radio" name="q60" value="D" /> Irrigation farming</label>
+  </div>
+
+  <div class="question">
+    <p>61. One of the benefits of crop rotation is that it:</p>
+    <label><input type="radio" name="q61" value="A" /> Increases erosion</label>
+    <label><input type="radio" name="q61" value="B" /> Promotes weed growth</label>
+    <label><input type="radio" name="q61" value="C" /> Improves soil fertility</label>
+    <label><input type="radio" name="q61" value="D" /> Reduces harvest</label>
+  </div>
+
+  <div class="question">
+    <p>62. A young female chicken is called:</p>
+    <label><input type="radio" name="q62" value="A" /> Chick</label>
+    <label><input type="radio" name="q62" value="B" /> Cock</label>
+    <label><input type="radio" name="q62" value="C" /> Pullet</label>
+    <label><input type="radio" name="q62" value="D" /> Hen</label>
+  </div>
+
+  <div class="question">
+    <p>63. The common nutrient that builds animal body is:</p>
+    <label><input type="radio" name="q63" value="A" /> Carbohydrates</label>
+    <label><input type="radio" name="q63" value="B" /> Proteins</label>
+    <label><input type="radio" name="q63" value="C" /> Fats</label>
+    <label><input type="radio" name="q63" value="D" /> Vitamins</label>
+  </div>
+
+  <div class="question">
+    <p>64. Which of these is a ruminant animal?</p>
+    <label><input type="radio" name="q64" value="A" /> Pig</label>
+    <label><input type="radio" name="q64" value="B" /> Fowl</label>
+    <label><input type="radio" name="q64" value="C" /> Sheep</label>
+    <label><input type="radio" name="q64" value="D" /> Dog</label>
+  </div>
+
+  <div class="question">
+    <p>65. Which of the following is not a method of irrigation?</p>
+    <label><input type="radio" name="q65" value="A" /> Surface irrigation</label>
+    <label><input type="radio" name="q65" value="B" /> Sprinkler</label>
+    <label><input type="radio" name="q65" value="C" /> Freezing irrigation</label>
+    <label><input type="radio" name="q65" value="D" /> Drip irrigation</label>
+  </div>
+
+  <div class="question">
+    <p>66. Farm records help farmers to:</p>
+    <label><input type="radio" name="q66" value="A" /> Sleep better</label>
+    <label><input type="radio" name="q66" value="B" /> Keep track of expenses and profits</label>
+    <label><input type="radio" name="q66" value="C" /> Grow crops faster</label>
+    <label><input type="radio" name="q66" value="D" /> Store grains longer</label>
+  </div>
+
+  <div class="question">
+    <p>67. A common farm animal parasite is:</p>
+    <label><input type="radio" name="q67" value="A" /> Virus</label>
+    <label><input type="radio" name="q67" value="B" /> Worm</label>
+    <label><input type="radio" name="q67" value="C" /> Tick</label>
+    <label><input type="radio" name="q67" value="D" /> Bacteria</label>
+  </div>
+
+  <div class="question">
+    <p>68. Which of the following is a fertilizer type?</p>
+    <label><input type="radio" name="q68" value="A" /> Herbicide</label>
+    <label><input type="radio" name="q68" value="B" /> Insecticide</label>
+    <label><input type="radio" name="q68" value="C" /> NPK</label>
+    <label><input type="radio" name="q68" value="D" /> Pesticide</label>
+  </div>
+
+  <div class="question">
+    <p>69. Which of these is not a source of organic manure?</p>
+    <label><input type="radio" name="q69" value="A" /> Cow dung</label>
+    <label><input type="radio" name="q69" value="B" /> Engine oil</label>
+    <label><input type="radio" name="q69" value="C" /> Compost</label>
+    <label><input type="radio" name="q69" value="D" /> Poultry droppings</label>
+  </div>
+
+  <div class="question">
+    <p>70. The chemical used to kill insects is called:</p>
+    <label><input type="radio" name="q70" value="A" /> Herbicide</label>
+    <label><input type="radio" name="q70" value="B" /> Fungicide</label>
+    <label><input type="radio" name="q70" value="C" /> Insecticide</label>
+    <label><input type="radio" name="q70" value="D" /> Antibiotic</label>
+  </div>
+
+  <div class="question">
+    <p>71. Which of the following is a processing method for cassava?</p>
+    <label><input type="radio" name="q71" value="A" /> Harvesting</label>
+    <label><input type="radio" name="q71" value="B" /> Fermentation</label>
+    <label><input type="radio" name="q71" value="C" /> Spraying</label>
+    <label><input type="radio" name="q71" value="D" /> Planting</label>
+  </div>
+
+  <div class="question">
+    <p>72. Which soil type holds the most water?</p>
+    <label><input type="radio" name="q72" value="A" /> Sand</label>
+    <label><input type="radio" name="q72" value="B" /> Clay</label>
+    <label><input type="radio" name="q72" value="C" /> Loam</label>
+    <label><input type="radio" name="q72" value="D" /> Gravel</label>
+  </div>
+
+  <div class="question">
+    <p>73. Which of these farming tools is used for digging holes?</p>
+    <label><input type="radio" name="q73" value="A" /> Hoe</label>
+    <label><input type="radio" name="q73" value="B" /> Axe</label>
+    <label><input type="radio" name="q73" value="C" /> Pickaxe</label>
+    <label><input type="radio" name="q73" value="D" /> Rake</label>
+  </div>
+
+  <div class="question">
+    <p>74. The baby of a sheep is called:</p>
+    <label><input type="radio" name="q74" value="A" /> Kid</label>
+    <label><input type="radio" name="q74" value="B" /> Lamb</label>
+    <label><input type="radio" name="q74" value="C" /> Calf</label>
+    <label><input type="radio" name="q74" value="D" /> Pup</label>
+  </div>
+
+  <div class="question">
+    <p>75. What is the common reason farmers spray crops?</p>
+    <label><input type="radio" name="q75" value="A" /> To change their colour</label>
+    <label><input type="radio" name="q75" value="B" /> To control pests</label>
+    <label><input type="radio" name="q75" value="C" /> To harvest them</label>
+    <label><input type="radio" name="q75" value="D" /> To cut them down</label>
+  </div>
+
+  <div class="question">
+    <p>76. The movement of nutrients from the soil due to rainfall is called:</p>
+    <label><input type="radio" name="q76" value="A" /> Leaching</label>
+    <label><input type="radio" name="q76" value="B" /> Mulching</label>
+    <label><input type="radio" name="q76" value="C" /> Erosion</label>
+    <label><input type="radio" name="q76" value="D" /> Infiltration</label>
+  </div>
+
+  <div class="question">
+    <p>77. Which of the following improves soil aeration?</p>
+    <label><input type="radio" name="q77" value="A" /> Flooding</label>
+    <label><input type="radio" name="q77" value="B" /> Compaction</label>
+    <label><input type="radio" name="q77" value="C" /> Tillage</label>
+    <label><input type="radio" name="q77" value="D" /> Overcropping</label>
+  </div>
+
+  <div class="question">
+    <p>78. The correct term for cow house is:</p>
+    <label><input type="radio" name="q78" value="A" /> Pen</label>
+    <label><input type="radio" name="q78" value="B" /> Coop</label>
+    <label><input type="radio" name="q78" value="C" /> Sty</label>
+    <label><input type="radio" name="q78" value="D" /> Cowshed</label>
+  </div>
+
+  <div class="question">
+    <p>79. A crossbreed is a product of:</p>
+    <label><input type="radio" name="q79" value="A" /> One parent</label>
+    <label><input type="radio" name="q79" value="B" /> Same animal species</label>
+    <label><input type="radio" name="q79" value="C" /> Two different breeds</label>
+    <label><input type="radio" name="q79" value="D" /> Same gender</label>
+  </div>
+
+  <div class="question">
+    <p>80. The removal of moisture from food to preserve it is called:</p>
+    <label><input type="radio" name="q80" value="A" /> Drying</label>
+    <label><input type="radio" name="q80" value="B" /> Fermentation</label>
+    <label><input type="radio" name="q80" value="C" /> Canning</label>
+    <label><input type="radio" name="q80" value="D" /> Steaming</label>
+  </div>
+
+  <div class="question">
+    <p>81. Which of the following is used to apply chemicals on crops?</p>
+    <label><input type="radio" name="q81" value="A" /> Cutlass</label>
+    <label><input type="radio" name="q81" value="B" /> Hoe</label>
+    <label><input type="radio" name="q81" value="C" /> Knapsack sprayer</label>
+    <label><input type="radio" name="q81" value="D" /> Harrow</label>
+  </div>
+
+  <div class="question">
+    <p>82. The animal disease that affects poultry and spreads quickly is:</p>
+    <label><input type="radio" name="q82" value="A" /> Tuberculosis</label>
+    <label><input type="radio" name="q82" value="B" /> Anthrax</label>
+    <label><input type="radio" name="q82" value="C" /> Newcastle disease</label>
+    <label><input type="radio" name="q82" value="D" /> Foot rot</label>
+  </div>
+
+  <div class="question">
+    <p>83. A farming practice that adds nutrients to the soil is:</p>
+    <label><input type="radio" name="q83" value="A" /> Green manuring</label>
+    <label><input type="radio" name="q83" value="B" /> Erosion</label>
+    <label><input type="radio" name="q83" value="C" /> Weeding</label>
+    <label><input type="radio" name="q83" value="D" /> Harvesting</label>
+  </div>
+
+  <div class="question">
+    <p>84. Which method controls soil erosion best on hilly land?</p>
+    <label><input type="radio" name="q84" value="A" /> Overgrazing</label>
+    <label><input type="radio" name="q84" value="B" /> Burning</label>
+    <label><input type="radio" name="q84" value="C" /> Terracing</label>
+    <label><input type="radio" name="q84" value="D" /> Weeding</label>
+  </div>
+
+  <div class="question">
+    <p>85. The use of animals to till the soil is known as:</p>
+    <label><input type="radio" name="q85" value="A" /> Mechanized farming</label>
+    <label><input type="radio" name="q85" value="B" /> Animal traction</label>
+    <label><input type="radio" name="q85" value="C" /> Subsistence farming</label>
+    <label><input type="radio" name="q85" value="D" /> Fertilizer farming</label>
+  </div>
+
+  <div class="question">
+    <p>86. Which of these is a product from sheep?</p>
+    <label><input type="radio" name="q86" value="A" /> Milk</label>
+    <label><input type="radio" name="q86" value="B" /> Wool</label>
+    <label><input type="radio" name="q86" value="C" /> Meat</label>
+    <label><input type="radio" name="q86" value="D" /> All of the above</label>
+  </div>
+
+  <div class="question">
+    <p>87. Which of the following animals is monogastric?</p>
+    <label><input type="radio" name="q87" value="A" /> Cow</label>
+    <label><input type="radio" name="q87" value="B" /> Goat</label>
+    <label><input type="radio" name="q87" value="C" /> Pig</label>
+    <label><input type="radio" name="q87" value="D" /> Sheep</label>
+  </div>
+
+  <div class="question">
+    <p>88. What is the general name for diseases passed from animals to humans?</p>
+    <label><input type="radio" name="q88" value="A" /> Infections</label>
+    <label><input type="radio" name="q88" value="B" /> Contagious</label>
+    <label><input type="radio" name="q88" value="C" /> Zoonotic</label>
+    <label><input type="radio" name="q88" value="D" /> Deadly</label>
+  </div>
+
+  <div class="question">
+    <p>89. Which of these is a cash crop?</p>
+    <label><input type="radio" name="q89" value="A" /> Millet</label>
+    <label><input type="radio" name="q89" value="B" /> Beans</label>
+    <label><input type="radio" name="q89" value="C" /> Yam</label>
+    <label><input type="radio" name="q89" value="D" /> Cocoa</label>
+  </div>
+
+  <div class="question">
+    <p>90. The act of applying fertilizer in liquid form is called:</p>
+    <label><input type="radio" name="q90" value="A" /> Fertigation</label>
+    <label><input type="radio" name="q90" value="B" /> Top dressing</label>
+    <label><input type="radio" name="q90" value="C" /> Broadcasting</label>
+    <label><input type="radio" name="q90" value="D" /> Drilling</label>
+  </div>
+
+  <div class="question">
+    <p>91. The topmost layer of the soil is called:</p>
+    <label><input type="radio" name="q91" value="A" /> Bedrock</label>
+    <label><input type="radio" name="q91" value="B" /> Subsoil</label>
+    <label><input type="radio" name="q91" value="C" /> Topsoil</label>
+    <label><input type="radio" name="q91" value="D" /> Humus</label>
+  </div>
+
+  <div class="question">
+    <p>92. A good seed must be:</p>
+    <label><input type="radio" name="q92" value="A" /> Dirty and broken</label>
+    <label><input type="radio" name="q92" value="B" /> Large and brown</label>
+    <label><input type="radio" name="q92" value="C" /> Viable and healthy</label>
+    <label><input type="radio" name="q92" value="D" /> Tiny and dry</label>
+  </div>
+
+  <div class="question">
+    <p>93. The act of keeping farm produce for future use is called:</p>
+    <label><input type="radio" name="q93" value="A" /> Transportation</label>
+    <label><input type="radio" name="q93" value="B" /> Storage</label>
+    <label><input type="radio" name="q93" value="C" /> Export</label>
+    <label><input type="radio" name="q93" value="D" /> Planting</label>
+  </div>
+
+  <div class="question">
+    <p>94. Which of these is <strong>not</strong> a farm input?</p>
+    <label><input type="radio" name="q94" value="A" /> Fertilizer</label>
+    <label><input type="radio" name="q94" value="B" /> Laptop/ electricity</label>
+    <label><input type="radio" name="q94" value="C" /> Seed</label>
+    <label><input type="radio" name="q94" value="D" /> Insecticide</label>
+  </div>
+
+  <div class="question">
+    <p>95. The farm animal that lays eggs is:</p>
+    <label><input type="radio" name="q95" value="A" /> Goat</label>
+    <label><input type="radio" name="q95" value="B" /> Cow</label>
+    <label><input type="radio" name="q95" value="C" /> Sheep</label>
+    <label><input type="radio" name="q95" value="D" /> Hen</label>
+  </div>
+
+  <div class="question">
+    <p>96. The white part of an egg is called:</p>
+    <label><input type="radio" name="q96" value="A" /> Shell</label>
+    <label><input type="radio" name="q96" value="B" /> Albumen</label>
+    <label><input type="radio" name="q96" value="C" /> Yolk</label>
+    <label><input type="radio" name="q96" value="D" /> Embryo</label>
+  </div>
+
+  <div class="question">
+    <p>97. In agriculture, drainages help to:</p>
+    <label><input type="radio" name="q97" value="A" /> Prevent waterlogging</label>
+    <label><input type="radio" name="q97" value="B" /> Store water</label>
+    <label><input type="radio" name="q97" value="C" /> Feed plants</label>
+    <label><input type="radio" name="q97" value="D" /> Water crops</label>
+  </div>
+
+  <div class="question">
+    <p>98. Which of the following is a farm animal product?</p>
+    <label><input type="radio" name="q98" value="A" /> Wool</label>
+    <label><input type="radio" name="q98" value="B" /> Milk</label>
+    <label><input type="radio" name="q98" value="C" /> Leather</label>
+    <label><input type="radio" name="q98" value="D" /> All of the above</label>
+  </div>
+
+  <div class="question">
+    <p>99. What helps to protect crops from excess sun and wind?</p>
+    <label><input type="radio" name="q99" value="A" /> Windbreaks</label>
+    <label><input type="radio" name="q99" value="B" /> Irrigation</label>
+    <label><input type="radio" name="q99" value="C" /> Drainage</label>
+    <label><input type="radio" name="q99" value="D" /> Compost</label>
+  </div>
+
+  <div class="question">
+    <p>100. Crop spacing helps to:</p>
+    <label><input type="radio" name="q100" value="A" /> Promote erosion</label>
+    <label><input type="radio" name="q100" value="B" /> Prevent overcrowding</label>
+    <label><input type="radio" name="q100" value="C" /> Increase pests</label>
+    <label><input type="radio" name="q100" value="D" /> Encourage diseases</label>
+  </div>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    const correctAnswers = {
+        q1: 'C',
+q2: 'B',
+q3: 'D',
+q4: 'C',
+q5: 'B',
+q6: 'B',
+q7: 'C',
+q8: 'C',
+q9: 'A',
+q10: 'A',
+q11: 'C',
+q12: 'C',
+q13: 'C',
+q14: 'C',
+q15: 'B',
+q16: 'A',
+q17: 'B',
+q18: 'C',
+q19: 'C',
+q20: 'B',
+q21: 'C',
+q22: 'B',
+q23: 'B',
+q24: 'C',
+q25: 'C',
+q26: 'B',
+q27: 'B',
+q28: 'B',
+q29: 'D',
+q30: 'D',
+q31: 'B',
+q32: 'C',
+q33: 'B',
+q34: 'B',
+q35: 'B',
+q36: 'D',
+q37: 'A',
+q38: 'C',
+q39: 'B',
+q40: 'C',
+q41: 'C',
+q42: 'B',
+q43: 'D',
+q44: 'C',
+q45: 'A',
+q46: 'C',
+q47: 'C',
+q48: 'B',
+q49: 'C',
+q50: 'C',
+q51: 'B',
+q52: 'C',
+q53: 'C',
+q54: 'C',
+q55: 'B',
+q56: 'B',
+q57: 'C',
+q58: 'B',
+q59: 'C',
+q60: 'C',
+q61: 'C',
+q62: 'C',
+q63: 'B',
+q64: 'C',
+q65: 'C',
+q66: 'B',
+q67: 'B',
+q68: 'C',
+q69: 'B',
+q70: 'C',
+q71: 'B',
+q72: 'B',
+q73: 'C',
+q74: 'B',
+q75: 'B',
+q76: 'A',
+q77: 'C',
+q78: 'D',
+q79: 'C',
+q80: 'A',
+q81: 'A',
+q82: 'B',
+q83: 'A',
+q84: 'C',
+q85: 'B',
+q86: 'D',
+q87: 'C',
+q88: 'C',
+q91: 'D',
+q92: 'A',
+q93: 'C',
+q94: 'C',
+q95: 'B',
+q96: 'B',
+q97: 'D',
+q98: 'B',
+q99: 'A',
+q100: 'D'
+
+     };
+
+    const form = document.getElementById('cbtForm');
+    const resultDiv = document.getElementById('result');
+    const studentNameInput = document.getElementById('studentName');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const studentName = studentNameInput.value.trim();
+      if (!studentName) {
+        alert('Please enter your name before submitting.');
+        studentNameInput.focus();
+        return;
+      }
+
+      let score = 0;
+      let total = Object.keys(correctAnswers).length;
+
+      for (const [question, correct] of Object.entries(correctAnswers)) {
+        const selected = form.elements[question].value;
+        if (selected === correct) {
+          score++;
+        }
+      }
+
+      const percentage = ((score / total) * 100).toFixed(2);
+
+      resultDiv.style.display = 'block';
+      resultDiv.textContent = `${studentName}, your score is ${score} out of ${total} (${percentage}%).`;
+
+      // Optionally disable form after submission
+      form.querySelector('button').disabled = true;
+      form.querySelectorAll('input').forEach(input => input.disabled = true);
+      studentNameInput.disabled = true;
+    });
+
+<!-- At the bottom of your quiz HTML file (inside <body>, just before </body>) -->
+
+function checkAnswers() {
+  // 👇 Calculate percentage score
+  const score = Math.round((correctAnswers / totalQuestions) * 100);
+  
+  // Display it inside an element with id="result"
+  document.getElementById("result").innerText = `Your score is ${score}%`;
+
+  // Send score to parent CBT frame
+  window.parent.postMessage({ score: score }, "*");
+}
+  </script>
+</body>
+</html>
