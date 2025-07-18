@@ -142,6 +142,15 @@
   <h3>Good luck, <span id="displayName"></span>!</h3>
   <p id="messageArea"></p>
   <iframe id="quizFrame" src=""></iframe>
+  <script>
+  // ✅ Listen for score sent from quiz iframe
+  window.addEventListener("message", function(event) {
+    if (event.data && typeof event.data.score !== "undefined") {
+      document.getElementById("finalScoreDisplay").innerText =
+        `✅ Final Score: ${event.data.score}%`;
+    }
+  });
+</script>
   <button id="submitEarlyBtn" onclick="submitEarly()">✅ I Have Submitted</button>
   <button id="goBackBtn" style="display: none;">⏪ Go Back</button>
 </div>
@@ -165,7 +174,7 @@ const allowedNames = [
 ];
 
 const quizLinks = {
-  'jss1_agric_first': 'https://your-link-here.com',
+  'jss1_agric_first': 'https://thadrox.github.io/dukecbt/duckduckgo.html',
   'jss1_homeecons_first': 'https://your-link-here.com',
   'jss1_computer_first': 'https://your-link-here.com',
   //JSS 1 SECOND TERM CBT EXAMS
