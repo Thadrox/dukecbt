@@ -142,15 +142,6 @@
   <h3>Good luck, <span id="displayName"></span>!</h3>
   <p id="messageArea"></p>
   <iframe id="quizFrame" src=""></iframe>
-  <script>
-  // ✅ Listen for score sent from quiz iframe
-  window.addEventListener("message", function(event) {
-    if (event.data && typeof event.data.score !== "undefined") {
-      document.getElementById("finalScoreDisplay").innerText =
-        `✅ Final Score: ${event.data.score}%`;
-    }
-  });
-</script>
   <button id="submitEarlyBtn" onclick="submitEarly()">✅ I Have Submitted</button>
   <button id="goBackBtn" style="display: none;">⏪ Go Back</button>
 </div>
