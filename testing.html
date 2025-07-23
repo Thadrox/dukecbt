@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Duke CBT Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      padding: 20px;
+    }
+    h2 {
+      color: #333;
+    }
+    .question {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+    #savedResults {
+      margin-top: 30px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<h2>Duke CBT Quiz</h2>
+
+<label>
+  Student Name:<br>
+  <input type="text" id="studentName" placeholder="Enter your full name" required>
+</label>
+
+<form id="quizForm">
+
+  <!-- QUESTION 1 -->
+  <div class="question">
+    <p>1. Which farming system involves moving from one farm to another after some years?</p>
+    <label><input type="radio" name="q1" value="A"> A. Mechanized farming</label><br>
+    <label><input type="radio" name="q1" value="B"> B. Crop rotation</label><br>
+    <label><input type="radio" name="q1" value="C"> C. Shifting cultivation</label><br>
+    <label><input type="radio" name="q1" value="D"> D. Mixed farming</label>
+  </div>
+
+  <!-- QUESTION 2 -->
+  <div class="question">
+    <p>2. Which of these is not an agricultural tool?</p>
+    <label><input type="radio" name="q2" value="A"> A. Hoe</label><br>
+    <label><input type="radio" name="q2" value="B"> B. Broom</label><br>
+    <label><input type="radio" name="q2" value="C"> C. Cutlass</label><br>
+    <label><input type="radio" name="q2" value="D"> D. Rake</label>
+  </div>
+
+  <!-- ADD MORE QUESTIONS BELOW THIS LINE -->
+  <!-- COPY-PASTE THIS BLOCK FOR EACH QUESTION AND CHANGE THE NUMBERS -->
+  <!--
+  <div class="question">
+    <p>3. [Your question here]</p>
+    <label><input type="radio" name="q3" value="A"> A. [Option A]</label><br>
+    <label><input type="radio" name="q3" value="B"> B. [Option B]</label><br>
+    <label><input type="radio" name="q3" value="C"> C. [Option C]</label><br>
+    <label><input type="radio" name="q3" value="D"> D. [Option D]</label>
+  </div>
+  -->
+
+  <button type="button" onclick="checkAnswers()">Submit</button>
+</form>
+
+<div class="result" id="scoreBox"></div>
+<button onclick="showSavedResults()">📄 View Saved Results</button>
+
+<div id="savedResults"></div>
+
+<script>
+  const correctAnswers = {
+    q1: "C",
+    q2: "B"
+    // Add more here like q3: "A", q4: "D", ...
+  };
+
+  function checkAnswers() {
+    const form = document.forms["quizForm"];
+    const student = document.getElementById("studentName").value.trim();
+
+    if (!student) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    let score = 0;
+    let total = Object.keys(correctAnswers).length;
+    let answers = {};
+
+    for (let key in correctAnswers) {
+      const selected = form[key]?.value;
+      answers[key] = selected || "Not answered";
+
+      if (selected === correctAnswers[key]) {
+        score++;
+      }
+    }
+
+    // Save to localStorage
+    const existingData = JSON.parse(localStorage.getItem("quizResults")) || [];
+    existingData.push({
+      name: student,
+      score: score,
+      total: total,
+      answers: answers,
+      date: new Date().toLocaleString()
+    });
+    localStorage.setItem("quizResults", JSON.stringify(existingData));
+
+    document.getElementById("scoreBox").innerText = `✅ ${student}, you scored ${score} out of ${total}.`;
+  }
+
+  function showSavedResults() {
+    const data = JSON.parse(localStorage.getItem("quizResults")) || [];
+    let out = `<h3>📊 Quiz Records</h3>`;
+    if (data.length === 0) {
+      out += "<p>No records found.</p>";
+    } else {
+      data.forEach((entry, index) => {
+        out += `<div style="margin-bottom:10px;">
+          <strong>${index + 1}. ${entry.name}</strong> (${entry.date})<br>
+          Score: ${entry.score}/${entry.total}<br>
+          Answers: ${JSON.stringify(entry.answers)}
+        </div>`;
+      });
+    }
+    document.getElementById("savedResults").innerHTML = out;
+  }
+</script>
+
+</body>
+</html>
